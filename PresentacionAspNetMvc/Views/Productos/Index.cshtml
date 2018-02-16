@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<TiendaVirtual.Entidades.IProducto>
 
 @{
+    /**/
+
     ViewBag.Title = "PRODUCTOS";
+    var mostrarModal = (Boolean)HttpContext.Current.Session["mostrarModal"];
+    var usuarios = (TiendaVirtual.Entidades.Usuario)@HttpContext.Current.Session["usuario"];
 }
 
 
@@ -11,14 +15,46 @@
     {
         <div class="col-md-4">
             <div class="thumbnail">
-                <img alt="" class="thumbnail" height="150" width="200" src="~/fotos/@(item.Id).png">
+                <img alt="" class="thumbnail tienda" height="150" width="200" src="~/fotos/@(item.Id).png">
                 <div class="caption">
                     <h3>@Html.DisplayFor(modelItem => item.Nombre)</h3>
-                    <p>@Html.DisplayFor(modelItem => item.Precio)</p>
-                    <p>@Html.ActionLink("Añadir al carrito", "Ficha", 
-                      new { id = item.Id }, new { @class="btn btn-primary", role="button" })</p>
+                    <h4>@Html.DisplayFor(modelItem => item.Precio)</h4>
+                    <p>
+                        @Html.ActionLink("Añadir al carrito", "Ficha",
+                                           new { id = item.Id }, new { @class = "btn btn-primary", role = "button" })
+                    </p>
                 </div>
             </div>
         </div>
     }
 </section>
+<section class="row text-center">
+    <div id="Registerk" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <p>Usuario<span>@usuarios</span> creado satisfactoriamente</p>
+            </div>
+        </div>
+    </div>
+    <div id="RegisterOk" class="modal fade " tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>Bienvenid@@ @usuarios.Nick</h3>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</section>
+@section Scripts
+{
+    @if (mostrarModal)
+    {
+        <script>
+            $('#RegisterOk').modal('show');
+        </script>
+        HttpContext.Current.Session["mostrarModal"] = false;
+    }
+
+}
+

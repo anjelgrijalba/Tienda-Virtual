@@ -12,25 +12,86 @@ namespace PresentacionAspNetMvc.Controllers
 {
     public class UsuariosController : Controller
     {
-        public ActionResult Login(Usuario usuario)
-        
+
+
+        // GET:Usuarios/Login
+        public ActionResult Login()
         {
-            var ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
-
-            IUsuario usuarioCompleto = ln.ValidarUsuarioYDevolverUsuario(
-                usuario.Nick, usuario.Password);
-            if (usuario == null)
-                Console.WriteLine("usuario incorrecto");
-            else
-                Console.WriteLine("usuario correcto");
-
-            HttpContext.Session["usuario"] = usuarioCompleto;
-
-            ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuarioCompleto;
-
-
-            return Redirect("/");
+           return View();
         }
+
+        // POST: GET:Usuarios/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login([Bind(Include = "Id,Nick,Password")] Usuario usuario)
+        {
+            ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
+
+            try
+            {
+                IUsuario usuarioCompleto = ln.ValidarUsuarioYDevolverUsuario(usuario.Nick, usuario.Password);
+
+                HttpContext.Session["usuario"] = usuarioCompleto;
+
+                ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuarioCompleto;
+
+                return Redirect("/");
+                //return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View(usuario);
+            }
+        }
+
+
+
+
+
+
+        // GET: Usuarios/Register
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        // POST: Backend/UsuariosBack/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register([Bind(Include = "Id,Nick,Password")] Usuario usuario)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
+                    ln.AltaUsuario(usuario);
+                    HttpContext.Session["usuario"] = usuario;
+
+                    ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuario;
+                    HttpContext.Session["mostrarModal"] = true;
+
+                    return Redirect("/");
+                   
+                }
+
+                return View(usuario);
+
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+
+        
+        
 
     }
 }
+
+
+
+

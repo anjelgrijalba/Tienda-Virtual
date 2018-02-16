@@ -71,3 +71,40 @@ h1, section > h2 {
 #login .modal-footer a, #login .modal-footer button {
     width: 50%;
 }
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+
+/* sticky footer */
+.wrapper {
+    min-height: 100%;
+    /* Equal to height of footer */
+    /* But also accounting for potential margin-bottom of last child */
+    margin-bottom: -250px;
+}
+
+.footer,
+.push {
+    height: 250px;
+}
+
+.footer {
+    margin-top: 15em;
+    margin-right:0;
+    margin-left:0;
+}
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+img.thumbnail.tienda{
+    height: 200px;
+    width:200px;
+}
+
+div#menuLat{
+    padding-left:0;
+}

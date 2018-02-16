@@ -194,6 +194,7 @@
     <Content Include="WEB\js\jquery-1.12.4.min.js" />
     <Content Include="WEB\js\tienda.js" />
     <Content Include="Areas\Backend\Views\web.config" />
+    <Content Include="Areas\Backend\Views\ProductosBack\Inicio.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -239,6 +240,8 @@
     <Content Include="Areas\Backend\Views\UsuariosBack\Details.cshtml" />
     <Content Include="Areas\Backend\Views\UsuariosBack\Edit.cshtml" />
     <Content Include="Areas\Backend\Views\UsuariosBack\Index.cshtml" />
+    <Content Include="Views\Usuarios\Login.cshtml" />
+    <Content Include="Views\Usuarios\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Backend\Models\" />

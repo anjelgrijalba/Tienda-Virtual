@@ -133,5 +133,10 @@ namespace PresentacionAspNetMvc.Areas.Backend.Controllers
                 return View(producto);
             }
         }
+
+        public ActionResult Inicio()
+        {
+            return View();
+        }
     }
 }

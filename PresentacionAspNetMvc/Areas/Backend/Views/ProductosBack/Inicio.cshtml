@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout - Backend.cshtml";
+}
+
+@section  BackToIndex
+{
+    @Html.ActionLink("CopyPasteShop BACKEND", "Inicio", "ProductosBack", null, new { @class = "navbar-brand" })
+}
+
