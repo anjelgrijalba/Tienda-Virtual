@@ -1,0 +1,73 @@
+body > form > footer {
+    background-color: black;
+    padding: 2em;
+}
+
+body > form > footer a {
+    color: #9d9d9d;
+}
+
+body > form > footer a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+body > form > footer h4 {
+    color: #fff;
+}
+
+/* make sidebar nav vertical */
+@media (min-width: 768px) {
+    .sidebar-nav .navbar .navbar-collapse {
+        padding: 0;
+        max-height: none;
+    }
+
+    .sidebar-nav .navbar ul {
+        float: none;
+        display: block;
+    }
+
+    .sidebar-nav .navbar li {
+        float: none;
+        display: block;
+    }
+
+        .sidebar-nav .navbar li a {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+}
+
+#cantidad {
+    width: 5em;
+}
+
+#factura tfoot tr:not(:first-child) td, #carrito tfoot tr:not(:first-child) td {
+    border: none;
+}
+
+#factura table tr td:last-child, #factura table tr th:last-child, #carrito table tr td:last-child, #carrito table tr th:last-child {
+    text-align: right;
+    padding-right: 2em;
+}
+
+#login form {
+    padding: 1em;
+}
+
+#apuntarse {
+    float: left;
+}
+
+h1, section > h2 {
+    display: none;
+}
+
+#login .modal-footer .btn-group {
+    width: 100%;
+}
+
+#login .modal-footer a, #login .modal-footer button {
+    width: 50%;
+}

@@ -1,0 +1,31 @@
+﻿@model TiendaVirtual.Entidades.Producto
+
+@{
+    ViewBag.Title = "Producto";
+}
+
+<section id="ficha" class="row">
+    <h2>Ficha de producto</h2>
+    <div class="col-xs-12 col-sm-6">
+        <img alt="" class="thumbnail" width="400" height="300" src="~/fotos/@(Model.Id).png" />
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <h2>@Html.DisplayFor(model => model.Nombre)</h2>
+        <p>@Html.DisplayFor(model => model.Precio)</p>
+        @using (Html.BeginForm("AgregarProducto", "Carrito", FormMethod.Post, new { id = "frmCarrito", @class = "form-inline" }))
+        {   @*<form id="frmCarrito" action="/Carrito/AgregarProducto" class="form-inline" method="post">*@
+            <div class="form-group">
+                <input class="form-control" type="number" name="cantidad" id="cantidad" value="1" />
+                <button class="btn btn-default" id="btnAumentarCantidad"><span class="glyphicon glyphicon-plus"></span></button>
+                <button class="btn btn-default" id="btnReducirCantidad"><span class="glyphicon glyphicon-minus"></span></button>
+                <button class="btn btn-primary" type="submit">Carrito <span class="glyphicon glyphicon-shopping-cart"></span></button>
+
+                <input type="hidden" name="id" value="@Html.DisplayFor(model => model.Id)" />
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts{
+    <script src="~/Scripts/tienda.js"></script>    
+}

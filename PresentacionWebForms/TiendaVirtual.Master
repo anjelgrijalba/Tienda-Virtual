@@ -1,0 +1,171 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="TiendaVirtual.master.cs" Inherits="PresentacionWebForms.TiendaVirtual" %>
+
+<!DOCTYPE html>
+
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title>CopyPasteShop</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="css/tienda.css" />
+    <script src="js/tienda.js"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="container-fluid">
+    <form runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <h1>CopyPasteShop</h1>
+        <nav class="navbar navbar-default navbar-inverse">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <asp:HyperLink runat="server" CssClass="navbar-brand" NavigateUrl="~/Default.aspx" Text="CopyPasteShop" />
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Producto a buscar" />
+                        </div>
+                        <button type="submit" class="btn btn-default">Buscar</button>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" data-toggle="modal" data-target="#login">Iniciar sesión</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#apuntarse">Registrarse</a></li>
+                                <li>
+                                    <asp:HyperLink runat="server" NavigateUrl="~/Carrito.aspx" Text="Carrito" />
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="sidebar-nav">
+                    <div class="navbar navbar-default navbar-inverse" role="navigation">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <span class="visible-xs navbar-brand">Sidebar menu</span>
+                        </div>
+                        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#">Informática <span class="badge">49</span></a></li>
+                                <li><a href="#">Electricidad</a></li>
+                                <li><a href="#">Bla</a></li>
+                                <li><a href="#">Bla</a></li>
+                                <li><a href="#">Bla</a></li>
+                            </ul>
+                        </div>
+                        <!--/.nav-collapse -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10">
+                <div>
+                    <asp:ContentPlaceHolder ID="principal" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+
+        </div>
+
+        <section class="row">
+            <h2>Login</h2>
+            <div id="login" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="form-horizontal">
+                            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                <ContentTemplate>
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Login</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <%--<form class="form-horizontal col-xs-12 col-sm-offset-3 col-sm-6 col-lg-offset-4 col-lg-4 thumbnail">--%>
+
+                                        <div class="form-group">
+                                            <asp:Label runat="server" AssociatedControlID="txtUsuario" CssClass="col-sm-3 control-label">Usuario</asp:Label>
+                                            <div class="col-sm-9">
+                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtUsuario" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <asp:Label runat="server" AssociatedControlID="txtPassword" CssClass="col-sm-3 control-label">Contraseña</asp:Label>
+                                            <div class="col-sm-9">
+                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword" TextMode="Password" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="btn-group">
+                                            <a class="btn btn-default" href="#" data-toggle="modal" data-target="#apuntarse">Apuntarse</a>
+                                            <asp:Button ID="btnLogin" runat="server" CssClass="btn btn-primary" OnClick="BtnLogin_Click" Text="Login" />
+                                            <asp:Label ID="lblResultado" runat="server"></asp:Label>
+                                        </div>
+                                    </div>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <footer class="row">
+            <div class="col-sm-4 text-center">
+                <h4>Parte 1</h4>
+                <ul class="list-unstyled">
+                    <li><a href="#">Uno</a></li>
+                    <li><a href="#">Dos</a></li>
+                    <li><a href="#">Tres</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-4 text-center">
+                <h4>Parte 2</h4>
+                <ul class="list-unstyled">
+                    <li><a href="#">Uno</a></li>
+                    <li><a href="#">Dos</a></li>
+                    <li><a href="#">Tres</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-4 text-center">
+                <h4>Parte 3</h4>
+                <ul class="list-unstyled">
+                    <li><a href="#">Uno</a></li>
+                    <li><a href="#">Dos</a></li>
+                    <li><a href="#">Tres</a></li>
+                </ul>
+            </div>
+        </footer>
+    </form>
+</body>
+</html>
