@@ -69,14 +69,13 @@ namespace PresentacionAspNetMvc.Controllers
                     HttpContext.Session["usuario"] = usuario;
 
                     ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuario;
-                    HttpContext.Session["mostrarModal"] = true;
+                    //HttpContext.Session["mostrarModal"] = true;
 
                     return Redirect("/");
-                   
+                    //return View(usuario);
+
                 }
-
                 return View(usuario);
-
             }
             catch
             {

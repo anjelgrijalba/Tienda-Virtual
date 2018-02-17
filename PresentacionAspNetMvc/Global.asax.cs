@@ -36,6 +36,8 @@ namespace PresentacionAspNetMvc
         protected void Session_Start()
         {
             Session["carrito"] = new Carrito(null);
+            Session["mostrarModal"] = false;
+            
         }
     }
 }
