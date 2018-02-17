@@ -21,26 +21,26 @@
             </thead>
             <tbody>
                 @foreach (var item in Model.LineasFactura)
-            {
-                <tr>
-                    <td>
-                        <img alt="" class="thumbnail" height="30" width="40" src="~/fotos/(@(item.Producto.Id)).png" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Producto.Nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Producto.Precio) €
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cantidad)
-                    </td>
-                    <td></td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Total) €
-                    </td>
-                </tr>
-        }
+                {
+                    <tr>
+                        <td>
+                            <img alt="" class="thumbnail" height="30" width="40" src="~/fotos/(@(item.Producto.Id)).png" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Producto.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Producto.Precio) €
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cantidad)
+                        </td>
+                        <td></td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Total) €
+                        </td>
+                    </tr>
+                }
             </tbody>
             <tfoot>
                 <tr>
@@ -48,24 +48,26 @@
                     <td></td>
                     <td></td>
                     <th>Total</th>
-                    <td>@Html.DisplayFor(model => model.Total)</td>
+                    <th>@Html.DisplayFor(model => model.Total) €</th>
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
+                    <td>
+                        <a href="@Url.Action("Index", "Productos")">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            Volver a la Tienda
+                        </a>
+                    </td>
                     <td></td>
                     <td></td>
                     <td>
-                        <p>
-                            @Html.ActionLink("Factura", "GenerarFactura", new { id = 223 },
-new { @class = "btn btn-primary", role = "button" })
-                        </p>
-                        <p>
-                            @Html.ActionLink("Index", "Index", "Productos", new { id = 223 },
-new { @class = "btn btn-primary", role = "button" })
-
-                        </p>
                         @*<button class="btn btn-primary" id="btnFactura">Factura</button>*@
+                    </td>
+                    <td>
+                        <p>
+                            @Html.ActionLink("Factura", "GenerarFactura", null, new { @class = "btn btn-primary pull-right", role = "button" })
+                        </p>
                     </td>
                 </tr>
             </tfoot>
