@@ -10,24 +10,24 @@
 <p>
     @Html.ActionLink("Crear Nuevo", "Create")
 </p>
-<table class="table">
+<table class="table text-center">
     <tr>
-        <th></th>
-        <th>
+        <th ></th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.Nombre)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.Precio)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Reverse())
     {
         <tr>
             <td>
                 <div>
-                        <img alt="" class="thumbnail" width="40" height="30" src="~/fotos/@(item.Id).png" />
+                        <img alt="" class="thumbnail" width="40" height="30" src="~/fotos/(@(item.Id)).png" />
                 </div>
             </td>
             <td>

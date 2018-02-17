@@ -11,6 +11,12 @@ namespace PresentacionAspNetMvc.Areas.Backend.Controllers
 {
     public class ProductosBackController : Controller
     {
+        public ActionResult Inicio()
+        {
+           
+            return View();
+        }
+
         // GET: Backend/ProductosBack
         public ActionResult Index()
         {

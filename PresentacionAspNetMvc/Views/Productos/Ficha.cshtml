@@ -7,11 +7,11 @@
 <section id="ficha" class="row">
     <h2>Ficha de producto</h2>
     <div class="col-xs-12 col-sm-6">
-        <img alt="" class="thumbnail" width="400" height="300" src="~/fotos/@(Model.Id).png" />
+        <img alt="" class="thumbnail" width="250" height="250" src="~/fotos/(@(Model.Id)).png" />
     </div>
     <div class="col-xs-12 col-sm-6">
         <h2>@Html.DisplayFor(model => model.Nombre)</h2>
-        <p>@Html.DisplayFor(model => model.Precio)</p>
+        <h3>@Html.DisplayFor(model => model.Precio) €</h3>
         @using (Html.BeginForm("AgregarProducto", "Carrito", FormMethod.Post, new { id = "frmCarrito", @class = "form-inline" }))
         {   @*<form id="frmCarrito" action="/Carrito/AgregarProducto" class="form-inline" method="post">*@
             <div class="form-group">
