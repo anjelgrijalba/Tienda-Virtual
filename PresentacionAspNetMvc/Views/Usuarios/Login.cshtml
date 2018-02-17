@@ -42,7 +42,10 @@
     }
 
     <div>
-        @Html.ActionLink("Tienda", "Index", null, new { @class = "glyphicon glyphicon-chevron-left" })
- 
+       
+        <a href="@Url.Action("Index", "Productos")" >
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            Volver a la Tienda
+        </a>
     </div>
 </section>
