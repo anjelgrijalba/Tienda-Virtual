@@ -239,6 +239,8 @@
     <Content Include="Areas\Backend\Views\UsuariosBack\Details.cshtml" />
     <Content Include="Areas\Backend\Views\UsuariosBack\Edit.cshtml" />
     <Content Include="Areas\Backend\Views\UsuariosBack\Index.cshtml" />
+    <Content Include="Views\Usuarios\Login.cshtml" />
+    <Content Include="Views\Usuarios\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Backend\Models\" />
