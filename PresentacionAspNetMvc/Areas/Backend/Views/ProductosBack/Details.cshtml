@@ -10,26 +10,31 @@
 <div>
     <h4>Producto</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <img alt="" class="thumbnail" width="150" height="150" src="~/fotos/(@(Model.Id)).png" />
+        </div>
+        <dl class="dl-horizontal col-xs-12 col-sm-8">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Precio)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Precio)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Precio)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Precio) €
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
 </div>
-<p>
+<p class="col-xs-12 col-sm-offset-5 clearfix">
     @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Volver a la lista", "Index")
 </p>

@@ -1,13 +1,17 @@
-﻿@model TiendaVirtual.Entidades.Factura
+﻿@using TiendaVirtual.Entidades
+
+@model TiendaVirtual.Entidades.Factura
 
 
 @{
     ViewBag.Title = "Factura";
-    decimal baseI = (decimal)Model?.ImporteSinIva;
+
+    IUsuario usuario = (IUsuario)HttpContext.Current.Session["usuario"];
+    
 }
 
 <section id="factura" class="row">
-    <h3>Factura</h3>
+    <h3>Factura: CPS/@DateTime.Now.ToShortDateString()-00450017</h3>
     <hr />
     <div id="datosvendedor" class="col-xs-6 col-sm-8">
         <p>Vendedor Vendedorez (CopyPasteShop)</p>
@@ -15,12 +19,12 @@
         <p>44444</p>
         <p>Su Localidad</p>
         <p>12.345.678Z</p>
-        <p>12/12/17</p>
-        <p>Factura: CPS/0045/2017</p>
+        <p>Fecha: @DateTime.Now.ToShortDateString()</p>
+
     </div>
     <div id="datoscliente" class="col-xs-6 col-sm-4">
         <p>
-            @(Model?.Usuario?.Nick)
+            @usuario.Nick
         </p>
         <p>Su dirección</p>
         <p>44444</p>
@@ -81,7 +85,7 @@
                     <td></td>
                     <th>Total</th>
                     <th>
-                        @(Model?.Total.ToString("C"));
+                        @(Model?.Total.ToString("C"))
                     </th>
                 </tr>
             </tfoot>
