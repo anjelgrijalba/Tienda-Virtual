@@ -1,0 +1,28 @@
+﻿@using TiendaVirtual.Entidades
+
+@model IUsuario
+
+@{
+    ViewBag.Title = "Logout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IUsuario usuario = (IUsuario)Session["usuario"];
+}
+<section class="col-sm-offset-1 col-sm-10 usuarios">
+    <h2>Logout</h2>
+
+    <h3>¿Seguro que quiere desconectarse@(usuario == null ? "" : ", " + usuario.Nick)?</h3>
+    <div>
+
+        <hr />
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Confirmar" class="btn btn-danger" /> |
+                @Html.ActionLink("Back to List", "Index", "Productos")
+            </div>
+        }
+    </div>
+</section>

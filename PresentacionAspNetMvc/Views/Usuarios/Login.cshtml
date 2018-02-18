@@ -4,7 +4,7 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<section class="col-sm-offset-1 col-sm-10">
+<section class="col-sm-offset-1 col-sm-10 usuarios">
     <h2>Login</h2>
 
     @using (Html.BeginForm())
@@ -28,7 +28,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" , Type = "Password" } })
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
             </div>

@@ -46,10 +46,6 @@ namespace PresentacionAspNetMvc.Controllers
         }
 
 
-
-
-
-
         // GET: Usuarios/Register
         public ActionResult Register()
         {
@@ -74,7 +70,7 @@ namespace PresentacionAspNetMvc.Controllers
                     HttpContext.Session["mostrarModal"] = true;
 
                     return Redirect("/");
-                    //return View(usuario);
+                   
 
                 }
                 return View(usuario);
@@ -86,9 +82,38 @@ namespace PresentacionAspNetMvc.Controllers
         }
 
 
+        // GET: Usuarios/Register
+        public ActionResult Logout()
+        {
+            return View();
+        }
+        // POST: Usuarios/Logout
+        
+        [HttpPost, ActionName("Logout")]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogoutConfirmed()
+        {
+            try
+            {
+                
+                HttpContext.Session["usuario"] = null;
 
-        
-        
+                HttpContext.Session["carrito"] = new Carrito(null);
+                Session["cantidadCarrito"] = 0;
+
+                return Redirect("/");
+
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+
+
+
 
     }
 }

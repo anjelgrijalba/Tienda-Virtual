@@ -81,10 +81,14 @@
                                     @Html.ActionLink("Registrarse", "Register", "Usuarios")
                                     @*<a href="#" data-toggle="modal" data-target="#apuntarse">Registrarse</a>*@
                                 </li>
+
+                                @*<li><a href="#" data-toggle="modal" data-target="#">ADMINISTRACION</a></li>*@
+                                <li>
+                                    @Html.ActionLink("Desconexión", "Logout", "Usuarios")
+                                </li>
                                 <li>
                                     @Html.ActionLink("ADMINISTRACIÓN", "Inicio", "ProductosBack", new { area = "Backend" }, null)
                                 </li>
-                                @*<li><a href="#" data-toggle="modal" data-target="#">ADMINISTRACION</a></li>*@
                             </ul>
                         </li>
                     </ul>

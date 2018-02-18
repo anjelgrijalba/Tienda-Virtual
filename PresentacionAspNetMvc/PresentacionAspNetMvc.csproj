@@ -242,6 +242,7 @@
     <Content Include="Areas\Backend\Views\UsuariosBack\Index.cshtml" />
     <Content Include="Views\Usuarios\Login.cshtml" />
     <Content Include="Views\Usuarios\Register.cshtml" />
+    <Content Include="Views\Usuarios\Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Backend\Models\" />
