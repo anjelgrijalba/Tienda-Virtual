@@ -1,12 +1,14 @@
 ﻿@model TiendaVirtual.Entidades.Factura
 
 
-    @{
-        ViewBag.Title = "Factura";
-    }
-  
+@{
+    ViewBag.Title = "Factura";
+    decimal baseI = (decimal)Model?.ImporteSinIva;
+}
+
 <section id="factura" class="row">
-    <h2>Factura</h2>
+    <h3>Factura</h3>
+    <hr />
     <div id="datosvendedor" class="col-xs-6 col-sm-8">
         <p>Vendedor Vendedorez (CopyPasteShop)</p>
         <p>Su dirección</p>
@@ -38,25 +40,25 @@
             </thead>
             <tbody>
                 @foreach (var item in Model.LineasFactura)
-            {
-                <tr>
-                    <td>
-                        <img alt="" class="thumbnail" height="30" width="40" src="~/fotos/(@(item.Producto.Id)).png" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Producto.Nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Producto.Precio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cantidad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Total)
-                    </td>
-                </tr>
-        }
+                {
+                    <tr>
+                        <td>
+                            <img alt="" class="thumbnail" height="30" width="40" src="~/fotos/(@(item.Producto.Id)).png" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Producto.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Producto.Precio) €
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cantidad)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Total) €
+                        </td>
+                    </tr>
+                }
 
             </tbody>
             <tfoot>
@@ -64,14 +66,14 @@
                     <td></td>
                     <td></td>
                     <th>Base Imponible</th>
-                    <th> @(Model?.ImporteSinIva)</th>
+                    <th> @(Model?.ImporteSinIva.ToString("C"))</th>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <th>IVA</th>
                     <th>
-                        @(Model?.Iva)
+                        @(Model?.Iva.ToString("C"))
                     </th>
                 </tr>
                 <tr>
@@ -79,10 +81,20 @@
                     <td></td>
                     <th>Total</th>
                     <th>
-                        @(Model?.Total)
+                        @(Model?.Total.ToString("C"));
                     </th>
                 </tr>
             </tfoot>
         </table>
+        <a href="@Url.Action("Index", "Productos")">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            Volver a la Tienda
+        </a>
+
+        <p>
+            @Html.ActionLink("Imprimir", "GenerarFactura", null, new { @class = "btn btn-primary pull-right", role = "button" })
+        </p>
+
     </div>
+
 </section>

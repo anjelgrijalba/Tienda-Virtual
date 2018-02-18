@@ -37,7 +37,8 @@ namespace PresentacionAspNetMvc
         {
             Session["carrito"] = new Carrito(null);
             Session["mostrarModal"] = false;
-            
+            Session["cantidadCarrito"] = 0;
+
         }
     }
 }

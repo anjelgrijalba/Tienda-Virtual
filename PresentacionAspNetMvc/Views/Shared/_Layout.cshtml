@@ -1,6 +1,7 @@
 ﻿@using TiendaVirtual.Entidades
 @{
     IUsuario usuario = (IUsuario)Session["usuario"];
+    var cantidadCarrito = Session["cantidadCarrito"];
 }
 
 
@@ -57,6 +58,10 @@
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a class="navbar-brand" href="~/Carrito/Index"><span class="glyphicon glyphicon-shopping-cart"></span>@(cantidadCarrito)</a>
+
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 @*<span>@HttpContext.Current.Session["usuario"]</span>*@

@@ -65,18 +65,18 @@
 
 
 @*@section Scripts
-{
-    @if (mostrarModal)
     {
-    <script>
-        $('#RegisterOk').modal('show');
+        @if (mostrarModal)
+        {
+        <script>
+            $('#RegisterOk').modal('show');
 
-        HttpContext.Session["mostrarModal"] = false;
+            HttpContext.Session["mostrarModal"] = false;
 
-        $('#RegisterOk').on('hidden.bs.modal', function (e) {
-            window.location.href = '/..';
-        })
+            $('#RegisterOk').on('hidden.bs.modal', function (e) {
+                window.location.href = '~/Productos/Index';
+            })
 
-    </script>
-    }
-}*@
+        </script>
+        }
+    }*@

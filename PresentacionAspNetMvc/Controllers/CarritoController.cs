@@ -28,7 +28,8 @@ namespace PresentacionAspNetMvc.Controllers
             IProducto producto = ln.BuscarProductoPorId(id);
 
             ln.AgregarProductoACarrito(producto, cantidad, carrito);
-
+            
+            HttpContext.Session["cantidadCarrito"] = (int)HttpContext.Session["cantidadCarrito"] + cantidad;
             //return View("Index", carrito);
             //return RedirectToAction ("~/Carrito");
             return RedirectToAction("Index");

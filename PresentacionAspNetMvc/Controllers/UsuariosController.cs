@@ -34,6 +34,7 @@ namespace PresentacionAspNetMvc.Controllers
                 HttpContext.Session["usuario"] = usuarioCompleto;
 
                 ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuarioCompleto;
+                Session["cantidadCarrito"] = 0;
 
                 return Redirect("/");
                 //return RedirectToAction("Index");
@@ -69,7 +70,8 @@ namespace PresentacionAspNetMvc.Controllers
                     HttpContext.Session["usuario"] = usuario;
 
                     ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuario;
-                    //HttpContext.Session["mostrarModal"] = true;
+                    Session["cantidadCarrito"] = 0;
+                    HttpContext.Session["mostrarModal"] = true;
 
                     return Redirect("/");
                     //return View(usuario);
