@@ -133,7 +133,14 @@ namespace TiendaVirtual.LogicaNegocio
             return usuario != null && password == usuario.Password ? usuario : null;
         }
 
+        public bool ExisteUsuario(string nick, string password)
+        {
+            IUsuario usuarioValido = ValidarUsuarioYDevolverUsuario(nick, password);
 
-      
+            return usuarioValido != null ? true : false;
+        }
+
+
+
     }
 }

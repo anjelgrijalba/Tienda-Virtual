@@ -13,6 +13,7 @@ namespace TiendaVirtual.LogicaNegocio
         IUsuario BuscarUsuarioPorId(int id);
         IEnumerable<IUsuario> BuscarTodosUsuarios();
         int ValidarUsuario(string nick, string password);
+        bool ExisteUsuario(string nick, string password);
         IUsuario ValidarUsuarioYDevolverUsuario(string nick, string password);
         IEnumerable<IProducto> ListadoProductos();
         IProducto BuscarProductoPorId(int v);

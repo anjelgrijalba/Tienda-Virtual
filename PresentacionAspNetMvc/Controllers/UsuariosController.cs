@@ -55,22 +55,28 @@ namespace PresentacionAspNetMvc.Controllers
         // POST: Backend/UsuariosBack/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "Id,Nick,Password")] Usuario usuario)
+        public ActionResult Register([Bind(Include = "Nick,Password")] Usuario usuario)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
-                    ln.AltaUsuario(usuario);
-                    HttpContext.Session["usuario"] = usuario;
 
-                    ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuario;
-                    Session["cantidadCarrito"] = 0;
-                    HttpContext.Session["mostrarModal"] = true;
+                    if (ln.ExisteUsuario(usuario.Nick, usuario.Password))
+                        return View(usuario);
+                    else
+                    {
+                        ln.AltaUsuario(usuario);
+                        HttpContext.Session["usuario"] = usuario;
 
-                    return Redirect("/");
-                   
+                        ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuario;
+                        Session["cantidadCarrito"] = 0;
+                        HttpContext.Session["mostrarModal"] = true;
+
+                        return Redirect("/");
+
+                    }
 
                 }
                 return View(usuario);
