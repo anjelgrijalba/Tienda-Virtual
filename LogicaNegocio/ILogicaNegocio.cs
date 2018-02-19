@@ -24,6 +24,7 @@ namespace TiendaVirtual.LogicaNegocio
         void AltaProducto(IProducto producto);
         void ModificarProducto(IProducto producto);
         void BajaProducto(int id);
+
         
     }
 }

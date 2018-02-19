@@ -85,6 +85,10 @@ namespace TiendaVirtual.LogicaNegocio
         {
             return daoUsuario.BuscarPorId(id);
         }
+        public IUsuario BuscarUsuarioPorNick(string nick)
+        {
+            return daoUsuario.BuscarPorNick(nick);
+        }
 
         public IFactura FacturarCarrito(ICarrito carrito)
         {
@@ -138,6 +142,12 @@ namespace TiendaVirtual.LogicaNegocio
             IUsuario usuarioValido = ValidarUsuarioYDevolverUsuario(nick, password);
 
             return usuarioValido != null ? true : false;
+        }
+        public bool ExisteNick(string nick)
+        {
+            IUsuario nickValido = BuscarUsuarioPorNick(nick);
+
+            return nickValido != null ? true : false;
         }
 
 
