@@ -4,7 +4,7 @@
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    //var mostrarModal = (Boolean)HttpContext.Current.Session["mostrarModal"];
+    var mostrarModal = (Boolean)HttpContext.Current.Session["mostrarModal"];
 
 }
 <section class="col-sm-offset-1 col-sm-10 usuarios">
@@ -36,6 +36,7 @@
                     
                     @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" @*,placeholder = "Password"*@, Type = "Password" } })
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    @ViewBag.Error
                 </div>
             </div>
 
@@ -46,13 +47,13 @@
             </div>
         </div>
 
-        @*<div id="RegisterOk" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div id="RegisterOk" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <p>Usuario creado satisfactoriamente</p>
                 </div>
             </div>
-        </div>*@
+        </div>
     }
 
     <div>
@@ -72,7 +73,7 @@
         <script>
             $('#RegisterOk').modal('show');
 
-            HttpContext.Session["mostrarModal"] = false;
+            HttpContext.Current.Session["mostrarModal"] = false;
 
             $('#RegisterOk').on('hidden.bs.modal', function (e) {
                 window.location.href = '~/Productos/Index';

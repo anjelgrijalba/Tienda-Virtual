@@ -37,6 +37,7 @@ namespace PresentacionAspNetMvc.Controllers
                 Session["cantidadCarrito"] = 0;
 
                 return Redirect("/");
+                
                 //return RedirectToAction("Index");
             }
             catch
@@ -55,7 +56,7 @@ namespace PresentacionAspNetMvc.Controllers
         // POST: Backend/UsuariosBack/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "Nick,Password")] Usuario usuario)
+        public ActionResult Register([Bind(Include = "Nick,Password,Id")] Usuario usuario)
         {
             try
             {
@@ -64,7 +65,10 @@ namespace PresentacionAspNetMvc.Controllers
                     ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
 
                     if (ln.ExisteUsuario(usuario.Nick, usuario.Password))
+                    {
+                        ViewBag.Error = "El Usuario ya existe";
                         return View(usuario);
+                    }
                     else
                     {
                         ln.AltaUsuario(usuario);
@@ -73,8 +77,9 @@ namespace PresentacionAspNetMvc.Controllers
                         ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuario;
                         Session["cantidadCarrito"] = 0;
                         HttpContext.Session["mostrarModal"] = true;
-
-                        return Redirect("/");
+                        ViewBag.Error = "Usuario Creado Correctamente";
+                        //return Redirect("/");
+                        return View(usuario);
 
                     }
 
