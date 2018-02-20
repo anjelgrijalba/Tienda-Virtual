@@ -85,6 +85,7 @@ namespace TiendaVirtual.LogicaNegocio
         {
             return daoUsuario.BuscarPorId(id);
         }
+
         public IUsuario BuscarUsuarioPorNick(string nick)
         {
             return daoUsuario.BuscarPorNick(nick);
@@ -149,7 +150,12 @@ namespace TiendaVirtual.LogicaNegocio
 
             return nickValido != null ? true : false;
         }
+        public bool PasswordCorrecto(string nick, string password)
+        {
+            IUsuario usuario = daoUsuario.BuscarPorNick(nick);
 
+            return usuario != null && password == usuario.Password ? true : false;
+        }
 
 
     }

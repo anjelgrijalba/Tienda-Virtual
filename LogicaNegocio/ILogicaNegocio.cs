@@ -10,11 +10,15 @@ namespace TiendaVirtual.LogicaNegocio
         void BajaUsuario(IUsuario usuario);
         void BajaUsuario(int id);
 
+        IUsuario BuscarUsuarioPorNick(string nick);
         IUsuario BuscarUsuarioPorId(int id);
         IEnumerable<IUsuario> BuscarTodosUsuarios();
         int ValidarUsuario(string nick, string password);
         bool ExisteUsuario(string nick, string password);
+        bool ExisteNick(string nick);
         IUsuario ValidarUsuarioYDevolverUsuario(string nick, string password);
+        bool PasswordCorrecto(string nick, string password);
+
         IEnumerable<IProducto> ListadoProductos();
         IProducto BuscarProductoPorId(int v);
         void AgregarProductoACarrito(IProducto producto, ICarrito carrito);

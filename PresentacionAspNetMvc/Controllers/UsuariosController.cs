@@ -29,14 +29,28 @@ namespace PresentacionAspNetMvc.Controllers
 
             try
             {
-                IUsuario usuarioCompleto = ln.ValidarUsuarioYDevolverUsuario(usuario.Nick, usuario.Password);
+                if (!ln.ExisteNick(usuario.Nick))
+                {
+                    ViewBag.ErrorNick = "El Nick no está registrado";
+                    return View(usuario);
+                }
+                else if (!ln.PasswordCorrecto(usuario.Nick, usuario.Password))
+                {
+                    ViewBag.ErrorPass = "La contraseña no es correcta";
+                    return View(usuario);
+                }
+                else
+                {
+                    IUsuario usuarioCompleto = ln.ValidarUsuarioYDevolverUsuario(usuario.Nick, usuario.Password);
 
-                HttpContext.Session["usuario"] = usuarioCompleto;
+                    HttpContext.Session["usuario"] = usuarioCompleto;
 
-                ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuarioCompleto;
-                Session["cantidadCarrito"] = 0;
-
-                return Redirect("/");
+                    ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuarioCompleto;
+                    Session["cantidadCarrito"] = 0;
+                    ViewBag.Error("Bienvenid@", @usuario.Nick);
+                    return View(usuario);
+                    //return Redirect("/");
+                }
                 
                 //return RedirectToAction("Index");
             }
@@ -63,10 +77,9 @@ namespace PresentacionAspNetMvc.Controllers
                 if (ModelState.IsValid)
                 {
                     ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
-
-                    if (ln.ExisteUsuario(usuario.Nick, usuario.Password))
+                    if (ln.ExisteNick(usuario.Nick))
                     {
-                        ViewBag.Error = "El Usuario ya existe";
+                        ViewBag.Error = "Ya existe un usuario con ese nick";
                         return View(usuario);
                     }
                     else
