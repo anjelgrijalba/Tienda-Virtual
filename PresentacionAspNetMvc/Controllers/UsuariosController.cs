@@ -46,8 +46,8 @@ namespace PresentacionAspNetMvc.Controllers
                     HttpContext.Session["usuario"] = usuarioCompleto;
 
                     ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuarioCompleto;
-                    Session["cantidadCarrito"] = 0;
-                    ViewBag.Error("Bienvenid@", @usuario.Nick);
+                    //Session["cantidadCarrito"] = 0;
+                    ViewBag.ErrorNick("Bienvenid@", @usuario.Nick);
                     return View(usuario);
                     //return Redirect("/");
                 }
@@ -88,7 +88,7 @@ namespace PresentacionAspNetMvc.Controllers
                         HttpContext.Session["usuario"] = usuario;
 
                         ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuario;
-                        Session["cantidadCarrito"] = 0;
+                        //Session["cantidadCarrito"] = 0;
                         HttpContext.Session["mostrarModal"] = true;
                         ViewBag.Error = "Usuario Creado Correctamente";
                         //return Redirect("/");

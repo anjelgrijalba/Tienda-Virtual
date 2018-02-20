@@ -49,8 +49,25 @@ namespace PresentacionAspNetMvc.Areas.Backend.Controllers
                 if (ModelState.IsValid)
                 {
                     ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
-                    ln.AltaUsuario(usuario);
-                    return RedirectToAction("Index");
+                    if (ln.ExisteNick(usuario.Nick))
+                    {
+                        ViewBag.Error = "Ya existe un usuario con ese nick";
+                        return View(usuario);
+                    }
+                    else
+                    {
+                        ln.AltaUsuario(usuario);
+                        HttpContext.Session["usuario"] = usuario;
+
+                        ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuario;
+                        Session["cantidadCarrito"] = 0;
+                        HttpContext.Session["mostrarModal"] = true;
+                        ViewBag.Error = "Usuario Creado Correctamente";
+                        
+                        return RedirectToAction("Index");
+
+                    }
+                   
                 }
 
                 return View(usuario);

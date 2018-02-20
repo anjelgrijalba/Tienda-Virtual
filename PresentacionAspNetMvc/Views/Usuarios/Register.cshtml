@@ -33,8 +33,15 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" @*,placeholder = "Password"*@, Type = "Password" } })
+
+                    @Html.EditorFor(model => model.Password, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @class = "form-control"@*,placeholder = "Password"*@,
+Type = "Password"
+}
+})
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                     @ViewBag.Error
                 </div>
@@ -46,14 +53,11 @@
                 </div>
             </div>
         </div>
-
-        <div id="RegisterOk" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <p>Usuario creado satisfactoriamente</p>
-                </div>
-            </div>
+        <div id="RegisterOk" class="alert alert-warning alert-dismissible fade" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Warning!</strong> Usuario creado satisfactoriamente
         </div>
+        
     }
 
     <div>
@@ -66,19 +70,19 @@
 </section>
 
 
-@*@section Scripts
+@section Scripts
     {
         @if (mostrarModal)
         {
         <script>
-            $('#RegisterOk').modal('show');
+            $('#RegisterOk').alert();
 
             HttpContext.Current.Session["mostrarModal"] = false;
 
-            $('#RegisterOk').on('hidden.bs.modal', function (e) {
+            $('#RegisterOk').on('close.bs.alert', function (e) {
                 window.location.href = '~/Productos/Index';
             })
 
         </script>
         }
-    }*@
+    }
