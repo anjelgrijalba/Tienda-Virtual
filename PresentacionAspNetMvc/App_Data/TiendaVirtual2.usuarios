@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[usuarios] (
+    [Id]     INT           IDENTITY (1, 1) NOT NULL,
+    [Nick]   NVARCHAR (50) NOT NULL,
+    [Contra] NVARCHAR (50) NOT NULL,
+    [NivelAcceso] INT NOT NULL, 
+    CONSTRAINT [PK_usuarios] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+

@@ -98,10 +98,20 @@ namespace TiendaVirtual.LogicaNegocio
             f.ImportarLineas(carrito.LineasFactura);
 
             f.Fecha = DateTime.Today;
+            f.Numero = DateTime.Today.ToString();
 
             daoFactura.Alta(f);
 
             return f;
+        }
+
+        public void AltaFactura(IFactura factura, int IdUs)
+        {
+            daoFactura.Alta(factura, IdUs);
+        }
+        public void AltaFactura(IFactura factura)
+        {
+            daoFactura.Alta(factura, IdUs);
         }
 
         public IEnumerable<IProducto> ListadoProductos()

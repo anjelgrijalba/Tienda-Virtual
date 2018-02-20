@@ -43,6 +43,7 @@
     <Compile Include="AccesoDatosException.cs" />
     <Compile Include="DaoFactory.cs" />
     <Compile Include="DaoFacturaColecciones.cs" />
+    <Compile Include="DaoFacturaSqlServer.cs" />
     <Compile Include="DaoProductoColecciones.cs" />
     <Compile Include="DaoProductoSqlServer.cs" />
     <Compile Include="DaoUsuarioColecciones.cs" />

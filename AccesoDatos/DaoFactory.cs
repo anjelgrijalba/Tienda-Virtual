@@ -42,13 +42,13 @@ namespace TiendaVirtual.AccesoDatos
 
         public IDaoFactura GetDaoFactura()
         {
-            return new DaoFacturaColecciones();
-            //switch (tipo)
-            //{
-            //    case "coleccion": return new DaoFacturaColecciones();
-            //    default:
-            //        throw new NotImplementedException("No existe la opción " + tipo);
-            //}
+            switch (tipo)
+            {
+                case "coleccion": return new DaoFacturaColecciones();
+                case "SqlServer": return new DaoFacturaSqlServer(cadenaConexion);
+                default:
+                    throw new NotImplementedException("No existe la opción " + tipo);
+            }
         }
     }
 }

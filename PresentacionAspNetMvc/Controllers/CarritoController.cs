@@ -41,6 +41,10 @@ namespace PresentacionAspNetMvc.Controllers
 
             ICarrito carrito = (ICarrito)HttpContext.Session["carrito"];
             IFactura factura = ln.FacturarCarrito(carrito);
+
+            IUsuario u = (IUsuario)HttpContext.Session["usuario"];
+            ln.AltaFactura(factura,u.Id);
+
             HttpContext.Session["factura"] = factura;
             return View("Factura", factura);
 

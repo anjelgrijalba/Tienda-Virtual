@@ -5,6 +5,7 @@ namespace TiendaVirtual.LogicaNegocio
 {
     public interface ILogicaNegocio
     {
+        //usuarios
         void AltaUsuario(IUsuario usuario);
         void ModificarUsuario(IUsuario usuario);
         void BajaUsuario(IUsuario usuario);
@@ -19,16 +20,20 @@ namespace TiendaVirtual.LogicaNegocio
         IUsuario ValidarUsuarioYDevolverUsuario(string nick, string password);
         bool PasswordCorrecto(string nick, string password);
 
+
+        //productos
         IEnumerable<IProducto> ListadoProductos();
         IProducto BuscarProductoPorId(int v);
         void AgregarProductoACarrito(IProducto producto, ICarrito carrito);
         void AgregarProductoACarrito(IProducto producto, int cantidad, ICarrito carrito);
-        IEnumerable<ILineaFactura> ListadoProductosCarrito(ICarrito carrito);
-        IFactura FacturarCarrito(ICarrito carrito);
         void AltaProducto(IProducto producto);
         void ModificarProducto(IProducto producto);
         void BajaProducto(int id);
 
-        
+        // facturas
+        IEnumerable<ILineaFactura> ListadoProductosCarrito(ICarrito carrito);
+        IFactura FacturarCarrito(ICarrito carrito);
+        void AltaFactura(IFactura factura, int idUs);
+        void AltaFactura(IFactura factura);
     }
 }
