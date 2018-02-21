@@ -11,7 +11,7 @@ namespace TiendaVirtual.AccesoDatos
     {
         private IDictionary<string, IFactura> facturas = new SortedDictionary<string, IFactura>();
 
-        public IEnumerable<IFactura> listarTodas()
+        public IEnumerable<IFactura> ListarTodas()
         {
             return null;
         }

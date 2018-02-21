@@ -167,7 +167,7 @@ namespace TiendaVirtual.LogicaNegocio
             return usuario != null && password == usuario.Password ? true : false;
         }
 
-        public IEnumerable<IFactura> listarFacturas()
+        public IEnumerable<IFactura> ListarFacturas()
         {
             return daoFactura.ListarTodas();
         }

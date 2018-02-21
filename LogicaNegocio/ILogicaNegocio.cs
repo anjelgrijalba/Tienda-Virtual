@@ -35,6 +35,6 @@ namespace TiendaVirtual.LogicaNegocio
         IFactura FacturarCarrito(ICarrito carrito);
         void AltaFactura(IFactura factura, IUsuario usuario);
         void AltaFactura(IFactura factura);
-        IEnumerable<IFactura> listarFacturas();
+        IEnumerable<IFactura> ListarFacturas();
     }
 }

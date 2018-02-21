@@ -43,7 +43,7 @@ namespace PresentacionAspNetMvc.Controllers
             IFactura factura = ln.FacturarCarrito(carrito);
 
             IUsuario u = (IUsuario)HttpContext.Session["usuario"];
-            ln.AltaFactura(factura,u.Id);
+            ln.AltaFactura(factura,u);
 
             HttpContext.Session["factura"] = factura;
             return View("Factura", factura);

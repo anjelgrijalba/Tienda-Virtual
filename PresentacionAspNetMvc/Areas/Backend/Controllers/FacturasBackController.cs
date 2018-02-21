@@ -15,7 +15,7 @@ namespace PresentacionAspNetMvc.Areas.Backend.Controllers
         {
             ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
 
-            IEnumerable<IFactura> listadoFacturas = ln.listarFacturas();
+            IEnumerable<IFactura> listadoFacturas = ln.ListarFacturas();
 
             return View(listadoFacturas);
         }

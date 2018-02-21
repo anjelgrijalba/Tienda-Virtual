@@ -94,7 +94,7 @@ namespace TiendaVirtual.AccesoDatos
                 throw new AccesoDatosException("No se ha podido realizar el alta", e);
             }
         }
-        public IEnumerable<IFactura> listarTodas()
+        public IEnumerable<IFactura> ListarTodas()
         {
             {
                 List<IFactura> facturas = new List<IFactura>();
@@ -117,14 +117,15 @@ namespace TiendaVirtual.AccesoDatos
 
                         while (dr.Read())
                         {
-                            factura = new Factura();
+
+                            IUsuario usuario = new Usuario();
+                            factura = new Factura(usuario);
 
                             factura.Id = dr.GetInt32(0);
                             factura.Numero = dr.GetString(1);
                             factura.Fecha = dr.GetDateTime(2);
-                            int Id = dr.GetInt16(3);
-                            ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
-
+                            factura.Usuario.Id = dr.GetInt16(3);
+                            
 
 
                             facturas.Add(factura);

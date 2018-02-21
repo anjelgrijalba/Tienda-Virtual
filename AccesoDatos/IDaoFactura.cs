@@ -12,6 +12,6 @@ namespace TiendaVirtual.AccesoDatos
         void Alta(IFactura factura);
         void Alta(IFactura factura, IUsuario usuario);
        
-        IEnumerable<IFactura> listarTodas();
+        IEnumerable<IFactura> ListarTodas();
     }
 }
