@@ -45,9 +45,9 @@ namespace TiendaVirtual.AccesoDatos
 
                     //int ultimoNumero = 20180000;
 
-                    var ultimoNumero = ParseInt(comSelectLast.ExecuteScalar());
-                    
-                    factura.Numero = (ultimoNumero + 1).ToString("00000000");
+                    string ultimoNumero = comSelectLast.ExecuteScalar().ToString();
+                   
+                    factura.Numero = (int.Parse(ultimoNumero) + 1).ToString("0000000"); 
 
 
                     //"Zona declarativa"
@@ -61,7 +61,7 @@ namespace TiendaVirtual.AccesoDatos
 
                     IDbDataParameter parNumero = comInsert.CreateParameter();
                     parNumero.ParameterName = "Numero";
-                    parNumero.DbType = DbType.UInt32;
+                    parNumero.DbType = DbType.String;
 
                     IDbDataParameter parFecha = comInsert.CreateParameter();
                     parFecha.ParameterName = "Fecha";
