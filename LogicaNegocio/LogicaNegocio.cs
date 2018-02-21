@@ -111,7 +111,7 @@ namespace TiendaVirtual.LogicaNegocio
         }
         public void AltaFactura(IFactura factura)
         {
-            daoFactura.Alta(factura, IdUs);
+            daoFactura.Alta(factura);
         }
 
         public IEnumerable<IProducto> ListadoProductos()

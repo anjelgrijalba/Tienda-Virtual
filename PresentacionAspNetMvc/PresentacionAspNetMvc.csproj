@@ -164,9 +164,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\UsuarioDbContext-20180206154611.mdf" />
-    <Content Include="App_Data\UsuarioDbContext-20180206154611_log.ldf">
-      <DependentUpon>UsuarioDbContext-20180206154611.mdf</DependentUpon>
+    <Content Include="App_Data\TiendaVirtual.mdf" />
+    <Content Include="App_Data\TiendaVirtual_log.ldf">
+      <DependentUpon>TiendaVirtual.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

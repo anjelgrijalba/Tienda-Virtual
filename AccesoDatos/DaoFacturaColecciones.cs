@@ -11,7 +11,10 @@ namespace TiendaVirtual.AccesoDatos
     {
         private IDictionary<string, IFactura> facturas = new SortedDictionary<string, IFactura>();
 
-        public void Alta(IFactura factura)
+        public void Alta(IFactura factura, int IUsuario)
+        {
+        }
+            public void Alta(IFactura factura)
         {
             int ultimoEntero = 0;
 
