@@ -124,7 +124,7 @@ namespace TiendaVirtual.AccesoDatos
                             factura.Id = dr.GetInt32(0);
                             factura.Numero = dr.GetString(1);
                             factura.Fecha = dr.GetDateTime(2);
-                            factura.Usuario.Id = dr.GetInt16(3);
+                            factura.Usuario.Id = dr.GetInt32(3);
                             
 
 

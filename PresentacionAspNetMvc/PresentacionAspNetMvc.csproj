@@ -196,6 +196,8 @@
     <Content Include="WEB\js\tienda.js" />
     <Content Include="Areas\Backend\Views\web.config" />
     <Content Include="Areas\Backend\Views\ProductosBack\Inicio.cshtml" />
+    <Content Include="Areas\Backend\Views\FacturasBack\Index.cshtml" />
+    <Content Include="Areas\Backend\Views\Shared\DisplayTemplates\ShortDateTime.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -247,7 +249,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Backend\Models\" />
-    <Folder Include="Areas\Backend\Views\FacturasBack\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

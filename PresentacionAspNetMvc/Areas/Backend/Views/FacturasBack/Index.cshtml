@@ -1,0 +1,65 @@
+﻿@using TiendaVirtual.Entidades
+
+@model IEnumerable <IFactura>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout - Backend.cshtml";
+
+
+}
+
+<h2><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Facturas Index</h2>
+
+<table class="table text-center table-striped">
+    <tr>
+        <th></th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Numero)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Fecha)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Reverse())
+    {
+    <tr>
+        <td>
+            <div>
+                @*<img alt="" class="thumbnail" width="40" height="30" src="~/fotos/(@(item.Id)).png" />*@
+            </div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha, "ShortDateTime")
+        </td>
+        <td>
+
+            @*@Html.DisplayFor(modelItem => item.)*@
+
+            @{ 
+
+        foreach (ILineaFactura l in item.LineasFactura)
+        {
+            @Html.DisplayFor(modelItem => l)
+        }
+
+
+            }
+
+            @*@Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
+        @Html.ActionLink("Borrar", "Delete", new { id = item.Id })*@
+        </td>
+    </tr>
+    }
+
+</table>
+@section  BackToIndex
+{
+    @Html.ActionLink("CopyPasteShop BACKEND", "Index", "FacturasBack", null, new { @class = "navbar-brand" })
+}
