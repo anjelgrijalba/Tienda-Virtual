@@ -10,7 +10,8 @@ namespace TiendaVirtual.AccesoDatos
     public interface IDaoFactura
     {
         void Alta(IFactura factura);
-        void Alta(IFactura factura, int IdUsuario);
-
+        void Alta(IFactura factura, IUsuario usuario);
+       
+        IEnumerable<IFactura> listarTodas();
     }
 }

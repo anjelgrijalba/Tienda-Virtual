@@ -8,7 +8,8 @@ namespace TiendaVirtual.Entidades
         public Factura(IUsuario usuario) : base(usuario)
         {
         }
-
+        
+        public int Id { get; set; }
         public string Numero { get; set; }
         public DateTime Fecha { get; set; }
 

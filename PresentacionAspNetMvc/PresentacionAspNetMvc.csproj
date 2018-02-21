@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Backend\BackendAreaRegistration.cs" />
+    <Compile Include="Areas\Backend\Controllers\FacturasBackController.cs" />
     <Compile Include="Areas\Backend\Controllers\ProductosBackController.cs" />
     <Compile Include="Areas\Backend\Controllers\UsuariosBackController.cs" />
     <Compile Include="Controllers\CarritoController.cs" />
@@ -246,6 +247,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Backend\Models\" />
+    <Folder Include="Areas\Backend\Views\FacturasBack\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

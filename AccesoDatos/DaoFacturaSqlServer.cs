@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TiendaVirtual.Entidades;
 
+
+
 namespace TiendaVirtual.AccesoDatos
 {
     public class DaoFacturaSqlServer : IDaoFactura
@@ -13,6 +15,7 @@ namespace TiendaVirtual.AccesoDatos
 
         private const string SQL_INSERT = "INSERT INTO facturas (Numero, Fecha, UsuariosId ) VALUES (@Numero, @Fecha, @Uid)";
         private const string SQL_SELECT_LAST = "SELECT TOP 1 Numero FROM facturas ORDER BY ID DESC";
+        private const string SQL_SELECT = "SELECT Id, Numero, Fecha, UsuariosId FROM facturas";
 
         private string connectionString;
 
@@ -20,10 +23,12 @@ namespace TiendaVirtual.AccesoDatos
         {
             this.connectionString = connectionString;
         }
+
         public void Alta(IFactura factura)
         {
         }
-            public void Alta(IFactura factura, int IdUsuario)
+
+        public void Alta(IFactura factura, IUsuario usuario)
         {
             try
             {
@@ -46,8 +51,8 @@ namespace TiendaVirtual.AccesoDatos
                     //int ultimoNumero = 20180000;
 
                     string ultimoNumero = comSelectLast.ExecuteScalar().ToString();
-                   
-                    factura.Numero = (int.Parse(ultimoNumero) + 1).ToString("0000000"); 
+
+                    factura.Numero = (int.Parse(ultimoNumero) + 1).ToString("0000000");
 
 
                     //"Zona declarativa"
@@ -72,7 +77,7 @@ namespace TiendaVirtual.AccesoDatos
                     comInsert.Parameters.Add(parUid);
 
                     //"Zona concreta"
-                    parUid.Value = IdUsuario;
+                    parUid.Value = usuario.Id;
                     parNumero.Value = factura.Numero;
                     parFecha.Value = factura.Fecha;
 
@@ -87,6 +92,51 @@ namespace TiendaVirtual.AccesoDatos
             catch (Exception e)
             {
                 throw new AccesoDatosException("No se ha podido realizar el alta", e);
+            }
+        }
+        public IEnumerable<IFactura> listarTodas()
+        {
+            {
+                List<IFactura> facturas = new List<IFactura>();
+
+                try
+                {
+                    using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
+                    {
+                        //"Zona declarativa"
+                        con.Open();
+
+                        IDbCommand comSelect = con.CreateCommand();
+
+                        comSelect.CommandText = SQL_SELECT;
+
+                        //"Zona concreta"
+                        IDataReader dr = comSelect.ExecuteReader();
+
+                        IFactura factura;
+
+                        while (dr.Read())
+                        {
+                            factura = new Factura();
+
+                            factura.Id = dr.GetInt32(0);
+                            factura.Numero = dr.GetString(1);
+                            factura.Fecha = dr.GetDateTime(2);
+                            int Id = dr.GetInt16(3);
+                            ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
+
+
+
+                            facturas.Add(factura);
+                        }
+
+                        return facturas;
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new AccesoDatosException("No se ha podido buscar todos los facturas", e);
+                }
             }
         }
     }

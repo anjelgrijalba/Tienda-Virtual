@@ -105,9 +105,9 @@ namespace TiendaVirtual.LogicaNegocio
             return f;
         }
 
-        public void AltaFactura(IFactura factura, int IdUs)
+        public void AltaFactura(IFactura factura, IUsuario usuario)
         {
-            daoFactura.Alta(factura, IdUs);
+            daoFactura.Alta(factura, usuario);
         }
         public void AltaFactura(IFactura factura)
         {
@@ -167,6 +167,9 @@ namespace TiendaVirtual.LogicaNegocio
             return usuario != null && password == usuario.Password ? true : false;
         }
 
-
+        public IEnumerable<IFactura> listarFacturas()
+        {
+            return daoFactura.ListarTodas();
+        }
     }
 }
