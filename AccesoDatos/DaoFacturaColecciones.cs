@@ -15,6 +15,10 @@ namespace TiendaVirtual.AccesoDatos
         {
             return null;
         }
+        public void AltaLineas(IFactura factura)
+        {
+
+        }
 
         public void Alta(IFactura factura, IUsuario Usuario)
         {

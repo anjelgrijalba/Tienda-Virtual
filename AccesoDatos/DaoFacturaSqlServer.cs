@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,8 @@ namespace TiendaVirtual.AccesoDatos
 
         private const string SQL_INSERT = "INSERT INTO facturas (Numero, Fecha, UsuariosId ) VALUES (@Numero, @Fecha, @Uid)";
         private const string SQL_SELECT_LAST = "SELECT TOP 1 Numero FROM facturas ORDER BY ID DESC";
-        private const string SQL_SELECT = "SELECT Id, Numero, Fecha, UsuariosId FROM facturas";
+        private const string SQL_SELECT = "SELECT f.Numero, f.Fecha,f. UsuariosId, l.productoId, l.Cantidad FROM facturas f, lineasfactura l WHERE  f.id = l.FacturaId";
+        private const string SQL_INSERT_LINEAS = "INSERT INTO lineasfactura (FacturaId, ProductoId, Cantidad ) VALUES (@NumeroFactura, @ProductoId, @Cantidad)";
 
         private string connectionString;
 
@@ -37,7 +39,7 @@ namespace TiendaVirtual.AccesoDatos
                 {
                     //"Zona declarativa"
                     con.Open();
-
+                    
                     IDbCommand comSelectLast = con.CreateCommand();
 
                     comSelectLast.CommandText = SQL_SELECT_LAST;
@@ -125,6 +127,9 @@ namespace TiendaVirtual.AccesoDatos
                             factura.Numero = dr.GetString(1);
                             factura.Fecha = dr.GetDateTime(2);
                             factura.Usuario.Id = dr.GetInt32(3);
+
+
+                           
                             
 
 
@@ -138,6 +143,72 @@ namespace TiendaVirtual.AccesoDatos
                 {
                     throw new AccesoDatosException("No se ha podido buscar todos los facturas", e);
                 }
+            }
+        }
+        public void AltaLineas(IFactura factura)
+        {
+            try
+            {
+
+                using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
+                {
+                    IDbTransaction transaccion;
+                    //"Zona declarativa"
+                    con.Open();
+                    transaccion = con.BeginTransaction();
+                    try
+                    {
+
+                        IDbCommand comSecomInsertLineas = con.CreateCommand();
+
+                        comSecomInsertLineas.CommandText = SQL_INSERT_LINEAS;
+
+                        foreach (ILineaFactura l in factura.LineasFactura)
+                        {
+                            IDbDataParameter parIdFactura = comSecomInsertLineas.CreateParameter();
+                            parIdFactura.ParameterName = "NumeroFactura";
+                            parIdFactura.DbType = DbType.String;
+
+                            IDbDataParameter parProducto = comSecomInsertLineas.CreateParameter();
+                            parProducto.ParameterName = "IdProducto";
+                            parProducto.DbType = DbType.Int16;
+
+                            IDbDataParameter parCantidad = comSecomInsertLineas.CreateParameter();
+                            parCantidad.ParameterName = "Cantidad";
+                            parCantidad.DbType = DbType.Int16;
+
+                            comSecomInsertLineas.Parameters.Add(parProducto);
+                            comSecomInsertLineas.Parameters.Add(parCantidad);
+                            comSecomInsertLineas.Parameters.Add(parIdFactura);
+
+                            //"Zona concreta"
+                            parIdFactura.Value = factura.Numero;
+                            parProducto.Value = l.Producto.Id;
+                            parCantidad.Value = l.Cantidad;
+
+                            int numRegistrosInsertados = comSecomInsertLineas.ExecuteNonQuery();
+                            if (numRegistrosInsertados != 1)
+                                throw new AccesoDatosException("Número de registros insertados: " +
+                                    numRegistrosInsertados);
+                        }
+
+                        
+                        
+                        transaccion.Commit();
+                    }
+                    catch (SqlException)
+                    {
+                        transaccion.Rollback();
+                    }
+
+
+
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AccesoDatosException("No se ha podido realizar el alta", e);
             }
         }
     }

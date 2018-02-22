@@ -98,8 +98,7 @@ namespace TiendaVirtual.LogicaNegocio
             f.ImportarLineas(carrito.LineasFactura);
 
             f.Fecha = DateTime.Today;
-            
-
+            daoFactura.AltaLineas(f);
             daoFactura.Alta(f);
 
             return f;
