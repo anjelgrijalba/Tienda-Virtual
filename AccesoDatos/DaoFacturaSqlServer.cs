@@ -135,11 +135,9 @@ namespace TiendaVirtual.AccesoDatos
                         int num = listado.Count();
                         for (int o = 0; o<num; o++)
                         {
-                            if (listado[o] != null)
+                            if (listado[o] != null) //comprobacion exception
                             {
-                                if (o > 0)
-                                {
-                                   
+                               
                                     IFactura factura;
                                     IUsuario usuario = new Usuario();
                                     factura = new Factura(usuario);
@@ -152,7 +150,10 @@ namespace TiendaVirtual.AccesoDatos
                                     ILineaFactura L = new LineaFactura(P, (int)listado[o][3]);
 
                                     lineas.Add(L);
-                                   
+                                if (o > 0)
+                                {
+
+
                                     //compruebo si seguimos en la misma factura
                                     if (listado[o][0].ToString() == listado[o - 1][0].ToString())
                                     {

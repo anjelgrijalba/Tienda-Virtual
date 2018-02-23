@@ -60,7 +60,9 @@ namespace TiendaVirtual.Entidades
 
         public override string ToString()
         {
-            return $"{Producto.Id}, {Producto.Nombre}, {Producto.Precio}, {Cantidad}, {ImporteSinIva}, {Iva}, {Total}";
+            //return $"{Producto.Id}, {Producto.Nombre}, {Producto.Precio}, {Cantidad}, {ImporteSinIva}, {Iva}, {Total}";
+            string cadena ="<tr><td>"+Producto.Id+"</td><td>{Producto.Nombre+"</td><td>"+Producto.Precio+"</ td >< td >"+Cantidad+"</td><td>"+ImporteSinIva+"</td><td>"+Iva+" </td><td>"+Total}</td></tr>";
+            return cadena;
         }
     }
 }
