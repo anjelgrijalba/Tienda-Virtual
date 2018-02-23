@@ -5,7 +5,7 @@ namespace TiendaVirtual.Entidades
 {
     public interface IFactura: ICompra
     {
-        int Id { get; set; }
+        
         string Numero { get; set; }
         DateTime Fecha { get; set; }
 

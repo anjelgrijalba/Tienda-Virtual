@@ -16,8 +16,9 @@ namespace TiendaVirtual.AccesoDatos
 
         private const string SQL_INSERT = "INSERT INTO facturas (Numero, Fecha, UsuariosId ) VALUES (@Numero, @Fecha, @Uid)";
         private const string SQL_SELECT_LAST = "SELECT TOP 1 Numero FROM facturas ORDER BY ID DESC";
-        private const string SQL_SELECT = "SELECT f.Numero, f.Fecha,f. UsuariosId, l.productoId, l.Cantidad FROM facturas f, lineasfactura l WHERE  f.id = l.FacturaId";
+        private const string SELECT_FACTURAS = "SELECT * FROM FACTURAS";
         private const string SQL_INSERT_LINEAS = "INSERT INTO lineasfactura (FacturaId, ProductoId, Cantidad ) VALUES (@NumeroFactura, @ProductoId, @Cantidad)";
+        private const string SELECT_LINEAS = "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick FROM facturas f, lineasfactura l, productos p, usuarios u WHERE f.Id = l.FacturaId AND p.Id = l.ProductoId AND u.Id= f.UsuariosId";
 
         private string connectionString;
 
@@ -100,6 +101,7 @@ namespace TiendaVirtual.AccesoDatos
         {
             {
                 List<IFactura> facturas = new List<IFactura>();
+                List<ILineaFactura> lineas = new List<ILineaFactura>();
 
                 try
                 {
@@ -109,33 +111,37 @@ namespace TiendaVirtual.AccesoDatos
                         con.Open();
 
                         IDbCommand comSelect = con.CreateCommand();
-
-                        comSelect.CommandText = SQL_SELECT;
-
-                        //"Zona concreta"
-                        IDataReader dr = comSelect.ExecuteReader();
-
-                        IFactura factura;
-
-                        while (dr.Read())
+                        comSelect.CommandText = SELECT_LINEAS;
+                        IDataReader drLin = comSelect.ExecuteReader();
+                        //comSelect.CommandText = SELECT_FACTURAS;
+                        //IDataReader drFact = comSelect.ExecuteReader();
+                        
+                        while (drLin.Read())    //lee cada una de las facturas
                         {
+                           
 
+                            IFactura factura;
                             IUsuario usuario = new Usuario();
                             factura = new Factura(usuario);
 
-                            factura.Id = dr.GetInt32(0);
-                            factura.Numero = dr.GetString(1);
-                            factura.Fecha = dr.GetDateTime(2);
-                            factura.Usuario.Id = dr.GetInt32(3);
-
-
                            
+                            factura.Numero = drLin.GetString(0);
+                            factura.Fecha = drLin.GetDateTime(1);
+                            factura.Usuario.Nick = drLin.GetString(7);
                             
 
+                            IProducto P = new Producto(drLin.GetInt32(4), drLin.GetString(5), drLin.GetDecimal(6));
+                            ILineaFactura L = new LineaFactura(P, drLin.GetInt32(3));
+                            
+                            
 
+                            lineas.Add(L);
+                            factura.ImportarLineas(lineas);
                             facturas.Add(factura);
                         }
+                        
 
+                       
                         return facturas;
                     }
                 }
@@ -160,7 +166,7 @@ namespace TiendaVirtual.AccesoDatos
                     {
 
                         IDbCommand comSecomInsertLineas = con.CreateCommand();
-
+                        comSecomInsertLineas.Transaction = transaccion;
                         comSecomInsertLineas.CommandText = SQL_INSERT_LINEAS;
 
                         foreach (ILineaFactura l in factura.LineasFactura)

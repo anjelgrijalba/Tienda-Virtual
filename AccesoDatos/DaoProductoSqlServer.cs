@@ -44,7 +44,7 @@ namespace TiendaVirtual.AccesoDatos
 
                     IDbDataParameter parPrecio = comInsert.CreateParameter();
                     parPrecio.ParameterName = "Precio";
-                    parPrecio.DbType = DbType.String;
+                    parPrecio.DbType = DbType.Decimal;
 
                     comInsert.Parameters.Add(parNombre);
                     comInsert.Parameters.Add(parPrecio);

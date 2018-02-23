@@ -9,7 +9,7 @@ namespace TiendaVirtual.Entidades
         {
         }
         
-        public int Id { get; set; }
+       
         public string Numero { get; set; }
         public DateTime Fecha { get; set; }
 
