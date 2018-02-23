@@ -16,9 +16,10 @@ namespace TiendaVirtual.AccesoDatos
 
         private const string SQL_INSERT = "INSERT INTO facturas (Numero, Fecha, UsuariosId ) VALUES (@Numero, @Fecha, @Uid)";
         private const string SQL_SELECT_LAST = "SELECT TOP 1 Numero FROM facturas ORDER BY ID DESC";
-        private const string SELECT_FACTURAS = "SELECT * FROM FACTURAS";
+        private const string SELECT_FACTURAS = "select distinct facturaid from lineasfactura";
         private const string SQL_INSERT_LINEAS = "INSERT INTO lineasfactura (FacturaId, ProductoId, Cantidad ) VALUES (@NumeroFactura, @ProductoId, @Cantidad)";
-        private const string SELECT_LINEAS = "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick FROM facturas f, lineasfactura l, productos p, usuarios u WHERE f.Id = l.FacturaId AND p.Id = l.ProductoId AND u.Id= f.UsuariosId";
+        //private const string SELECT_LIN = "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick, f.Id FROM facturas f, lineasfactura l, productos p, usuarios u WHERE f.Id = l.FacturaId AND p.Id = l.ProductoId AND u.Id= f.UsuariosId";
+        private const string SELECT_LIN = "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick FROM facturas f INNER JOIN lineasfactura l ON f.Id = l.FacturaId INNER JOIN productos p ON p.Id = l.ProductoId INNER JOIN usuarios u ON u.Id= f.UsuariosId";
 
         private string connectionString;
 
@@ -40,7 +41,7 @@ namespace TiendaVirtual.AccesoDatos
                 {
                     //"Zona declarativa"
                     con.Open();
-                    
+
                     IDbCommand comSelectLast = con.CreateCommand();
 
                     comSelectLast.CommandText = SQL_SELECT_LAST;
@@ -111,39 +112,94 @@ namespace TiendaVirtual.AccesoDatos
                         con.Open();
 
                         IDbCommand comSelect = con.CreateCommand();
-                        comSelect.CommandText = SELECT_LINEAS;
-                        IDataReader drLin = comSelect.ExecuteReader();
-                        //comSelect.CommandText = SELECT_FACTURAS;
-                        //IDataReader drFact = comSelect.ExecuteReader();
+                        comSelect.CommandText = SELECT_LIN;
+                        IDataReader dr = comSelect.ExecuteReader();
                         
-                        while (drLin.Read())    //lee cada una de las facturas
+                        List<Object[]> listado = new List<Object[]>();
+
+
+                        while (dr.Read())    //lee cada una de las lineas de todas las facturas seguidas
                         {
-                           
-
-                            IFactura factura;
-                            IUsuario usuario = new Usuario();
-                            factura = new Factura(usuario);
-
-                           
-                            factura.Numero = drLin.GetString(0);
-                            factura.Fecha = drLin.GetDateTime(1);
-                            factura.Usuario.Nick = drLin.GetString(7);
-                            
-
-                            IProducto P = new Producto(drLin.GetInt32(4), drLin.GetString(5), drLin.GetDecimal(6));
-                            ILineaFactura L = new LineaFactura(P, drLin.GetInt32(3));
-                            
-                            
-
-                            lineas.Add(L);
-                            factura.ImportarLineas(lineas);
-                            facturas.Add(factura);
+                            Object[] linea = new Object[]
+                            { dr.GetString(0),
+                              dr.GetDateTime(1),
+                              dr.GetInt32(2),
+                              dr.GetInt32(3),
+                              dr.GetInt32(4),
+                              dr.GetString(5),
+                              dr.GetDecimal(6),
+                              dr.GetString(7),
+                              };
+                            listado.Add(linea);
                         }
+                        int num = listado.Count();
+                        for (int o = 0; o<num; o++)
+                        {
+                            if (listado[o] != null)
+                            {
+                                if (o > 0)
+                                {
+                                   
+                                    IFactura factura;
+                                    IUsuario usuario = new Usuario();
+                                    factura = new Factura(usuario);
+                                    factura.Numero = listado[o][0].ToString();
+                                    factura.Fecha = (DateTime)listado[o][1];
+                                    factura.Usuario.Nick = listado[o][7].ToString();
+                                    //factura.Usuario.Id = dr.GetInt32(9);
+
+                                    IProducto P = new Producto((int)listado[o][4], listado[o][5].ToString(), (decimal)listado[o][6]);
+                                    ILineaFactura L = new LineaFactura(P, (int)listado[o][3]);
+
+                                    lineas.Add(L);
+                                   
+                                    //compruebo si seguimos en la misma factura
+                                    if (listado[o][0].ToString() == listado[o - 1][0].ToString())
+                                    {
+
+                                       
+                                       
+                                    }
+                                    else //hemos cambiado de factura
+                                    {
+                                        factura.ImportarLineas(lineas);
+                                        facturas.Add(factura);
+                                    }
+
+                                   
+                                   
+                                }
+                                else
+                                {
+
+                                }
+                              
+                            }
+                            }
+                              
+                           
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         
 
-                       
+
                         return facturas;
-                    }
+                    
                 }
                 catch (Exception e)
                 {
@@ -198,8 +254,8 @@ namespace TiendaVirtual.AccesoDatos
                                     numRegistrosInsertados);
                         }
 
-                        
-                        
+
+
                         transaccion.Commit();
                     }
                     catch (SqlException)

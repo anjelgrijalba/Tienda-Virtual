@@ -20,9 +20,17 @@ namespace TiendaVirtual.Entidades
             foreach (ILineaFactura linea in lineas)
                 lineasFactura.Add(linea.Producto.Id, linea);
         }
+        //public IEnumerable<ILineaFactura> MostrarLineas(IFactura factura)
+        //{
+           
+        //    foreach (ILineaFactura linea in factura)
+        //        lineasFactura.Add(linea.Producto.Id, linea);
+        //    return 
+        //}
 
         public override string ToString()
         {
+           
             return $"{Numero}\n{Fecha}\n{Usuario}\n{string.Join("\n",LineasFactura)}\n{ImporteSinIva}\n{Iva}\n{Total}";
         }
     }
