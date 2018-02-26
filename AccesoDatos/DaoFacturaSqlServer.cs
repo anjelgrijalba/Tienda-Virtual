@@ -19,7 +19,7 @@ namespace TiendaVirtual.AccesoDatos
         private const string SELECT_FACTURAS = "select distinct facturaid from lineasfactura";
         private const string SQL_INSERT_LINEAS = "INSERT INTO lineasfactura (FacturaId, ProductoId, Cantidad ) VALUES (@NumeroFactura, @ProductoId, @Cantidad)";
         //private const string SELECT_LIN = "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick, f.Id FROM facturas f, lineasfactura l, productos p, usuarios u WHERE f.Id = l.FacturaId AND p.Id = l.ProductoId AND u.Id= f.UsuariosId";
-        private const string SELECT_LIN = "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick FROM facturas f INNER JOIN lineasfactura l ON f.Id = l.FacturaId INNER JOIN productos p ON p.Id = l.ProductoId INNER JOIN usuarios u ON u.Id= f.UsuariosId";
+        //private const string SELECT_LIN = "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick FROM facturas f INNER JOIN lineasfactura l ON f.Id = l.FacturaId INNER JOIN productos p ON p.Id = l.ProductoId INNER JOIN usuarios u ON u.Id= f.UsuariosId";
 
         private string connectionString;
 
@@ -112,6 +112,13 @@ namespace TiendaVirtual.AccesoDatos
                         con.Open();
 
                         IDbCommand comSelect = con.CreateCommand();
+                        const string SELECT_LIN = 
+                            "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick " +
+                            "FROM facturas f " +
+                            "INNER JOIN lineasfactura l ON f.Id = l.FacturaId " +
+                            "INNER JOIN productos p ON p.Id = l.ProductoId " +
+                            "INNER JOIN usuarios u ON u.Id= f.UsuariosId";
+
                         comSelect.CommandText = SELECT_LIN;
                         IDataReader dr = comSelect.ExecuteReader();
                         
@@ -137,7 +144,6 @@ namespace TiendaVirtual.AccesoDatos
                         {
                             if (listado[o] != null) //comprobacion exception
                             {
-                               
                                     IFactura factura;
                                     IUsuario usuario = new Usuario();
                                     factura = new Factura(usuario);
