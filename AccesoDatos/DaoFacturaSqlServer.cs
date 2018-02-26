@@ -112,7 +112,7 @@ namespace TiendaVirtual.AccesoDatos
                         con.Open();
 
                         IDbCommand comSelect = con.CreateCommand();
-                        const string SELECT_LIN = 
+                        const string SELECT_LIN =
                             "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick " +
                             "FROM facturas f " +
                             "INNER JOIN lineasfactura l ON f.Id = l.FacturaId " +
@@ -121,14 +121,15 @@ namespace TiendaVirtual.AccesoDatos
 
                         comSelect.CommandText = SELECT_LIN;
                         IDataReader dr = comSelect.ExecuteReader();
-                        
+
                         List<Object[]> listado = new List<Object[]>();
 
 
                         while (dr.Read())    //lee cada una de las lineas de todas las facturas seguidas
                         {
                             Object[] linea = new Object[]
-                            { dr.GetString(0),
+                            {
+                              dr.GetString(0),
                               dr.GetDateTime(1),
                               dr.GetInt32(2),
                               dr.GetInt32(3),
@@ -136,77 +137,40 @@ namespace TiendaVirtual.AccesoDatos
                               dr.GetString(5),
                               dr.GetDecimal(6),
                               dr.GetString(7),
-                              };
+                            };
                             listado.Add(linea);
                         }
                         int num = listado.Count();
-                        for (int o = 0; o<num; o++)
+                        for (int o = 0; o < num; o++)
                         {
                             if (listado[o] != null) //comprobacion exception
                             {
-                                    IFactura factura;
-                                    IUsuario usuario = new Usuario();
-                                    factura = new Factura(usuario);
-                                    factura.Numero = listado[o][0].ToString();
-                                    factura.Fecha = (DateTime)listado[o][1];
-                                    factura.Usuario.Nick = listado[o][7].ToString();
-                                    //factura.Usuario.Id = dr.GetInt32(9);
+                                IFactura factura;
+                                IUsuario usuario = new Usuario();
+                                factura = new Factura(usuario);
+                                factura.Numero = listado[o][0].ToString();
+                                factura.Fecha = (DateTime)listado[o][1];
+                                factura.Usuario.Nick = listado[o][7].ToString();
+                                //factura.Usuario.Id = dr.GetInt32(9);
 
-                                    IProducto P = new Producto((int)listado[o][4], listado[o][5].ToString(), (decimal)listado[o][6]);
-                                    ILineaFactura L = new LineaFactura(P, (int)listado[o][3]);
+                                IProducto P = new Producto((int)listado[o][4], listado[o][5].ToString(), (decimal)listado[o][6]);
+                                ILineaFactura L = new LineaFactura(P, (int)listado[o][3]);
 
-                                    lineas.Add(L);
-                                if (o > 0)
+                                lineas.Add(L);
+                                while (o < num-1)
                                 {
-
-
-                                    //compruebo si seguimos en la misma factura
-                                    if (listado[o][0].ToString() == listado[o - 1][0].ToString())
-                                    {
-
-                                       
-                                       
-                                    }
-                                    else //hemos cambiado de factura
+                                    //compruebo si hemos cambiado de factura
+                                    if (listado[o][0].ToString() != listado[o + 1][0].ToString())
                                     {
                                         factura.ImportarLineas(lineas);
                                         facturas.Add(factura);
+                                        lineas.Clear();
                                     }
-
-                                   
-                                   
                                 }
-                                else
-                                {
-
-                                }
-                              
                             }
-                            }
-                              
-                           
                         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
-
-
+                    }
                         return facturas;
-                    
                 }
                 catch (Exception e)
                 {

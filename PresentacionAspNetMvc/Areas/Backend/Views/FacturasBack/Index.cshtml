@@ -1,6 +1,6 @@
 ﻿@using TiendaVirtual.Entidades
 
-@model IEnumerable <IFactura>
+@model IEnumerable<IFactura>
 
 @{
     ViewBag.Title = "Index";
@@ -24,52 +24,64 @@
             Detalle
         </th>
     </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <table>
+
+                <tr>
+
+                    <td>Producto</td>
+                    <td>Cantidad</td>
+                    <td>ImporteSinIva</td>
+                    <td>Iva</td>
+                    <td>Total</td>
+                </tr>
+            </table>
+        </td>
+   
+    </tr>
+   @* <tr><td></td><td></td><td></td><td><tr><td>producto</td><td>cantidad</td><td>precio</td></tr></td></tr>*@
 
     @foreach (var item in Model.Reverse())
     {
-    <tr>
-        <td>
-            <div>
-                @*<img alt="" class="thumbnail" width="40" height="30" src="~/fotos/(@(item.Id)).png" />*@
-            </div>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Numero)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fecha, "ShortDateTime")
-        </td>
-        <td>
+        <tr>
+            <td>
+                <div>
+                    @*<img alt="" class="thumbnail" width="40" height="30" src="~/fotos/(@(item.Id)).png" />*@
+                </div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha, "ShortDateTime")
+            </td>
+            <td>
 
-            @*@Html.DisplayFor(modelItem => item.)*@
-            <table>
-                
-                    @{
-
-                        foreach (ILineaFactura l in item.LineasFactura)
-                        {   <tr><td>
-
-    @{
-        string lin = l.ToString();
-    }
-    @l
-                </td>
-
-                </tr>
-
-
+                @*@Html.DisplayFor(modelItem => item.)*@
+                <table>
+                    @{foreach (ILineaFactura l in item.LineasFactura)
+                        {
+                            <tr>
+                               
+                                <td>@l.Producto</td>
+                                <td>@l.Cantidad</td>
+                                <td>@l.ImporteSinIva</td>
+                                <td>@l.Iva</td>
+                                <td>@l.Total</td>
+                            </tr>
+                        }
                     }
+                </table>
 
-
-                    }
-               
-            </table>
-
-            @*@Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
-        @Html.ActionLink("Borrar", "Delete", new { id = item.Id })*@
-        </td>
-    </tr>
+                @*@Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Borrar", "Delete", new { id = item.Id })*@
+            </td>
+        </tr>
     }
 
 </table>
