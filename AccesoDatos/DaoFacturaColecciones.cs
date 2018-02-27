@@ -15,16 +15,12 @@ namespace TiendaVirtual.AccesoDatos
         {
             return null;
         }
-        public void AltaLineas(IFactura factura)
+        public void AltaLineas(IFactura factura, int id)
         {
 
         }
 
-        public void Alta(IFactura factura, IUsuario Usuario)
-        {
-
-        }
-            public void Alta(IFactura factura)
+        public void Alta(IFactura factura)
         {
             int ultimoEntero = 0;
 
@@ -39,6 +35,21 @@ namespace TiendaVirtual.AccesoDatos
             factura.Numero = (ultimoEntero + 1).ToString("000000");
 
             facturas.Add(factura.Numero, factura);
+        }
+
+        public int GetIdFactura(string numero)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GenerarNumero()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Alta(DateTime fecha, int idU, string numero)
+        {
+            throw new NotImplementedException();
         }
     }
 }

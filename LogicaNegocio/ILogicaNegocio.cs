@@ -1,5 +1,6 @@
 ﻿using TiendaVirtual.Entidades;
 using System.Collections.Generic;
+using System;
 
 namespace TiendaVirtual.LogicaNegocio
 {
@@ -32,9 +33,12 @@ namespace TiendaVirtual.LogicaNegocio
 
         // facturas
         IEnumerable<ILineaFactura> ListadoProductosCarrito(ICarrito carrito);
-        IFactura FacturarCarrito(ICarrito carrito);
-        void AltaFactura(IFactura factura, IUsuario usuario);
+        IFactura FacturarCarrito(ICarrito carrito, string numero);
+        void AltaFactura(DateTime fecha, int idU, string numero);
         void AltaFactura(IFactura factura);
         IEnumerable<IFactura> ListarFacturas();
+        void AltaLineas(IFactura factura, int id);
+        string GenerarNumero();
+        int GetIdFactura(string numero);
     }
 }

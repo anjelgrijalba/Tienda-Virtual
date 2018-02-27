@@ -10,8 +10,11 @@ namespace TiendaVirtual.AccesoDatos
     public interface IDaoFactura
     {
         void Alta(IFactura factura);
-        void Alta(IFactura factura, IUsuario usuario);
-        void AltaLineas(IFactura factura);
+        void Alta(DateTime fecha, int idU, string numero);
+        void AltaLineas(IFactura factura, int id);
          IEnumerable<IFactura> ListarTodas();
+        int GetIdFactura(string numero);
+        string GenerarNumero();
+
     }
 }

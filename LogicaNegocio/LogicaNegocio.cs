@@ -91,28 +91,34 @@ namespace TiendaVirtual.LogicaNegocio
             return daoUsuario.BuscarPorNick(nick);
         }
 
-        public IFactura FacturarCarrito(ICarrito carrito)
+        public IFactura FacturarCarrito(ICarrito carrito, string numero)
         {
             IFactura f = new Factura(carrito.Usuario);
 
             f.ImportarLineas(carrito.LineasFactura);
 
             f.Fecha = DateTime.Today;
-            daoFactura.AltaLineas(f);
-            daoFactura.Alta(f);
+
+            f.Numero = numero;
+
+            //daoFactura.Alta(f);
+            
+            //int idFactura = daoFactura.GetIdFactura(f);
+
+            //daoFactura.AltaLineas(f);
 
             return f;
         }
 
-        public void AltaFactura(IFactura factura, IUsuario usuario)
+        public void AltaFactura(DateTime fecha, int idU, string numero)
         {
-            daoFactura.Alta(factura, usuario);
+            daoFactura.Alta(fecha, idU, numero);
         }
         public void AltaFactura(IFactura factura)
         {
             daoFactura.Alta(factura);
         }
-
+        
         public IEnumerable<IProducto> ListadoProductos()
         {
             return daoProducto.BuscarTodos();
@@ -169,6 +175,20 @@ namespace TiendaVirtual.LogicaNegocio
         public IEnumerable<IFactura> ListarFacturas()
         {
             return daoFactura.ListarTodas();
+        }
+
+        public string  GenerarNumero()
+        {
+            return daoFactura.GenerarNumero();
+        }
+
+        public int GetIdFactura(string numero)
+        {
+            return daoFactura.GetIdFactura(numero);
+        }
+        public void AltaLineas(IFactura factura, int id)
+        {
+            daoFactura.AltaLineas(factura, id);
         }
     }
 }

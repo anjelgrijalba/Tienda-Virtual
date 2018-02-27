@@ -3,7 +3,7 @@
 @model IEnumerable<IFactura>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Facturas";
     Layout = "~/Areas/Backend/Views/Shared/_Layout - Backend.cshtml";
 
 
@@ -20,7 +20,7 @@
         <th class="text-center">
             @Html.DisplayNameFor(model => model.Fecha)
         </th>
-        <th class="text-center">
+        <th class="text-center" colspan="5">
             Detalle
         </th>
     </tr>
@@ -28,60 +28,54 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>
-            <table>
-
-                <tr>
-
-                    <td>Producto</td>
-                    <td>Cantidad</td>
-                    <td>ImporteSinIva</td>
-                    <td>Iva</td>
-                    <td>Total</td>
-                </tr>
-            </table>
-        </td>
-   
+        <th class="text-center">Cantidad</th>
+        <th class="text-center">Producto</th>
+        <th class="text-center">Importe Sin Iva</th>
+        <th class="text-center">Iva</th>
+        <th class="text-center">Total</th>
     </tr>
-   @* <tr><td></td><td></td><td></td><td><tr><td>producto</td><td>cantidad</td><td>precio</td></tr></td></tr>*@
 
     @foreach (var item in Model.Reverse())
     {
-        <tr>
-            <td>
-                <div>
-                    @*<img alt="" class="thumbnail" width="40" height="30" src="~/fotos/(@(item.Id)).png" />*@
-                </div>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Numero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha, "ShortDateTime")
-            </td>
-            <td>
+    <tr>
+        <td>
+            <div>
+                @*<img alt="" class="thumbnail" width="40" height="30" src="~/fotos/(@(item.Id)).png" />*@
+            </div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha, "ShortDateTime")
+        </td>
+        <td colspan="5"></td>
 
-                @*@Html.DisplayFor(modelItem => item.)*@
-                <table>
-                    @{foreach (ILineaFactura l in item.LineasFactura)
-                        {
-                            <tr>
-                               
-                                <td>@l.Producto</td>
-                                <td>@l.Cantidad</td>
-                                <td>@l.ImporteSinIva</td>
-                                <td>@l.Iva</td>
-                                <td>@l.Total</td>
-                            </tr>
-                        }
-                    }
-                </table>
 
-                @*@Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Borrar", "Delete", new { id = item.Id })*@
-            </td>
-        </tr>
+
+
+        @{foreach (ILineaFactura l in item.LineasFactura)
+        {
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>@l.Cantidad</td>
+        <td>@l.Producto.Nombre</td>
+
+        <td>@l.ImporteSinIva</td>
+        <td>@l.Iva</td>
+        <td>@l.Total</td>
+    </tr>
+    }
+        }
+
+
+        @*@Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
+        @Html.ActionLink("Borrar", "Delete", new { id = item.Id })*@
+       
+    </tr>
     }
 
 </table>

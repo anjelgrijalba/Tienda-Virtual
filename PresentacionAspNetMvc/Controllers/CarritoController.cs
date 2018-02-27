@@ -40,14 +40,21 @@ namespace PresentacionAspNetMvc.Controllers
             ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
 
             ICarrito carrito = (ICarrito)HttpContext.Session["carrito"];
-            IFactura factura = ln.FacturarCarrito(carrito);
 
-            IUsuario u = (IUsuario)HttpContext.Session["usuario"];
-            ln.AltaFactura(factura,u);
+            string numeroFactura = ln.GenerarNumero();
 
+            IFactura factura = ln.FacturarCarrito(carrito, numeroFactura);
 
+            IUsuario usuario = (IUsuario)HttpContext.Session["usuario"];
 
+            ln.AltaFactura(factura.Fecha,usuario.Id,numeroFactura);
+
+            int idFactura = ln.GetIdFactura(numeroFactura);
+
+            ln.AltaLineas(factura, idFactura);
+            
             HttpContext.Session["factura"] = factura;
+
             return View("Factura", factura);
 
         }
