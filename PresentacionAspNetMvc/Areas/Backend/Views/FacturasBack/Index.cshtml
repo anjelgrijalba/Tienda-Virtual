@@ -5,101 +5,126 @@
 @{
     ViewBag.Title = "Facturas";
     Layout = "~/Areas/Backend/Views/Shared/_Layout - Backend.cshtml";
-
-
 }
 
 <h2><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Facturas Index</h2>
 
-<table class="table text-center table-striped">
-    <tr>
-        <th></th>
-        <th class="text-center">
-            @Html.DisplayNameFor(model => model.Numero)
-        </th>
-        <th class="text-center">
-            @Html.DisplayNameFor(model => model.Fecha)
-        </th>
-        <th class="text-center" colspan="5">
-            Detalle
-        </th>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <th class="text-center">Cantidad</th>
-        <th class="text-center">Producto</th>
-        <th class="text-center">Base</th>
-        <th class="text-center">Iva</th>
-        <th class="text-center">Total</th>
-    </tr>
+<section id="factura" class="row">
     @foreach (var item in Model.Reverse())
+
     {
-        <tr>
-            <td>
-                <div>
-                    @*<img alt="" class="thumbnail" width="40" height="30" src="~/fotos/(@(item.Id)).png" />*@
-                </div>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Numero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha, "ShortDateTime")
-            </td>
-            <td colspan="5"></td>
+        <h3>Factura: @Html.DisplayFor(modelItem => item.Numero)</h3>
+        <hr />
+        <div id="datosvendedor" class="col-xs-6 col-sm-8">
+            <p>Vendedorez (CopyPasteShop)</p>
+            <p>dirección vendedor</p>
+            <p>12.345.678Z</p>
+            @* <p>Fecha: @DateTime.Now.ToShortDateString()</p>*@
+            <p>Fecha: @Html.DisplayFor(modelItem => item.Fecha, "ShortDateTime")</p>
+        </div>
+        <div id="datoscliente" class="col-xs-6 col-sm-4">
+            <p>
+                Cliente: @item.Usuario.Nick
+            </p>
+            @*<p>Código Cliente: @item.Usuario.Id</p>*@
+            <p>dirección cliente</p>
+
+            <p>12.345.678Z</p>
+        </div>
+        <table class="table table-condensed table-hover table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        @*@Html.DisplayNameFor(model => model.Numero)*@
+                        Número
+                    </th>
+                    <th class="text-center">
+                        @* @Html.DisplayNameFor(model => model.Fecha)*@
+                        Fecha
+                    </th>
+                    <th class="text-center" colspan="5">
+                        Detalle
+                    </th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-center">Producto</th>
+                    <th class="text-center">Base</th>
+                    <th class="text-center">Iva</th>
+                    <th class="text-center">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-primary">
+                        <strong>
+                            @Html.DisplayFor(modelItem => item.Numero)
+                        </strong>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha, "ShortDateTime")
+                    </td>
+                    <td colspan="5"></td>
+                </tr>
+                @foreach (ILineaFactura l in item.LineasFactura)
+    {
+            <tr>
+                <td></td>
+                <td>
+                    <div>
+                        <img alt="" class="thumbnail" width="40" height="30" src="~/fotos/(@(l.Producto.Id)).png" />
+                    </div>
+                </td>
+                <td>@l.Cantidad ud.</td>
+                <td>@l.Producto.Nombre</td>
+                <td>@l.ImporteSinIva.ToString("C")</td>
+                <td>@l.Iva.ToString("C")</td>
+                <td>@l.Total.ToString("C")</td>
             </tr>
-            foreach (ILineaFactura l in item.LineasFactura)
-            {
+}
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>@l.Cantidad ud.</td>
-                    <td><strong></strong>@l.Producto.Nombre</td>
-                    <td>@l.ImporteSinIva.ToString("C")</td>
-                    <td>@l.Iva.ToString("C")</td>
-                    <td>@l.Total.ToString("C")</td>
+                    <th class="text-center">Base</th>
+                    <th class="text-center"> @(item.ImporteSinIva.ToString("C"))</th>
+                    <td></td>
+                    <td></td>
                 </tr>
-            }
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <th class="text-center">Base</th>
-                <th class="text-center"> @(item.ImporteSinIva.ToString("C"))</th>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <th class="text-center">IVA</th>
-                <td></td>
-                <th class="text-center"> @(item.Iva.ToString("C"))</th>
-                <td></td>
-            </tr>
-            <tr id="finTabla">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <th class="text-center">TOTAL</th>
-                <td></td>
-                <td></td>
-                <th class="text-center"> @(item.Total.ToString("C"))</th>
-            </tr>
-     }
-              @*@Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Borrar", "Delete", new { id = item.Id })*@
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th class="text-center">IVA</th>
+                    <td></td>
+                    <th class="text-center"> @(item.Iva.ToString("C"))</th>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr id="finTabla">
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Numero }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.Numero }) |
+                        @Html.ActionLink("Borrar", "Delete", new { id = item.Numero })
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <th class="text-center">TOTAL</th>
+                    <td></td>
+                    <td></td>
+                    <th class="text-center"> @(item.Total.ToString("C"))</th>
+                </tr>
+            </tfoot>
+        </table>
+        <hr style="border:15px;"><hr style="border:2px;">
+    }
+    </section>
 
-</table>
-@section  BackToIndex
+
+    @section  BackToIndex
 {
-    @Html.ActionLink("CopyPasteShop BACKEND", "Index", "FacturasBack", null, new { @class = "navbar-brand" })
-}
+        @Html.ActionLink("CopyPasteShop BACKEND", "Index", "FacturasBack", null, new { @class = "navbar-brand" })
+    }
