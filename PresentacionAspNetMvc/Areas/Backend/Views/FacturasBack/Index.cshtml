@@ -30,53 +30,73 @@
         <td></td>
         <th class="text-center">Cantidad</th>
         <th class="text-center">Producto</th>
-        <th class="text-center">Importe Sin Iva</th>
+        <th class="text-center">Base</th>
         <th class="text-center">Iva</th>
         <th class="text-center">Total</th>
     </tr>
-
     @foreach (var item in Model.Reverse())
     {
-    <tr>
-        <td>
-            <div>
-                @*<img alt="" class="thumbnail" width="40" height="30" src="~/fotos/(@(item.Id)).png" />*@
-            </div>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Numero)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fecha, "ShortDateTime")
-        </td>
-        <td colspan="5"></td>
-
-
-
-
-        @{foreach (ILineaFactura l in item.LineasFactura)
-        {
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>@l.Cantidad</td>
-        <td>@l.Producto.Nombre</td>
-
-        <td>@l.ImporteSinIva</td>
-        <td>@l.Iva</td>
-        <td>@l.Total</td>
-    </tr>
-    }
-        }
-
-
-        @*@Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
-        @Html.ActionLink("Borrar", "Delete", new { id = item.Id })*@
-       
-    </tr>
-    }
+        <tr>
+            <td>
+                <div>
+                    @*<img alt="" class="thumbnail" width="40" height="30" src="~/fotos/(@(item.Id)).png" />*@
+                </div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha, "ShortDateTime")
+            </td>
+            <td colspan="5"></td>
+            </tr>
+            foreach (ILineaFactura l in item.LineasFactura)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@l.Cantidad ud.</td>
+                    <td><strong></strong>@l.Producto.Nombre</td>
+                    <td>@l.ImporteSinIva.ToString("C")</td>
+                    <td>@l.Iva.ToString("C")</td>
+                    <td>@l.Total.ToString("C")</td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th class="text-center">Base</th>
+                <th class="text-center"> @(item.ImporteSinIva.ToString("C"))</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th class="text-center">IVA</th>
+                <td></td>
+                <th class="text-center"> @(item.Iva.ToString("C"))</th>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th class="text-center">TOTAL</th>
+                <td></td>
+                <td></td>
+                <th class="text-center"> @(item.Total.ToString("C"))</th>
+            </tr>
+     }
+              @*@Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Borrar", "Delete", new { id = item.Id })*@
 
 </table>
 @section  BackToIndex

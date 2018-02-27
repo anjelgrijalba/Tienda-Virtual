@@ -38,8 +38,7 @@
                     {
                         htmlAttributes = new
                         {
-                            @class = "form-control"@*,placeholder = "Password"*@,
-Type = "Password"
+                            @class = "form-control"@*,placeholder = "Password"*@,Type = "Password"
 }
 })
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
@@ -57,7 +56,7 @@ Type = "Password"
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Warning!</strong> Usuario creado satisfactoriamente
         </div>
-        
+
     }
 
     <div>
@@ -72,8 +71,8 @@ Type = "Password"
 
 @section Scripts
     {
-        @if (mostrarModal)
-        {
+    @if (mostrarModal)
+    {
         <script>
             $('#RegisterOk').alert();
 
@@ -84,5 +83,5 @@ Type = "Password"
             })
 
         </script>
-        }
     }
+}
