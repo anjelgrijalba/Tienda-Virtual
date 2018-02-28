@@ -66,7 +66,7 @@
                     </td>
                     <td>
                         <p>
-                            @Html.ActionLink("Factura", "GenerarFactura", null, new { @class = "btn btn-primary pull-right", role = "button" })
+                            @Html.ActionLink("Factura", "GenerarFactura", new { origen = "'Factura', 'Carrito'" }), new { @class = "btn btn-primary pull-right", role = "button" })
                         </p>
                     </td>
                 </tr>

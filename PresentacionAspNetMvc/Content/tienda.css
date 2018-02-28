@@ -120,3 +120,8 @@ div.separador{
 button.navbar-btn{
     background-color:black;
 }
+div.print{
+    background-image:url("../fotos/print.jpg");
+    padding:6em;
+    background-size:contain;
+}

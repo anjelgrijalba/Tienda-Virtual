@@ -23,7 +23,7 @@ namespace PresentacionAspNetMvc.Controllers
         // POST: GET:Usuarios/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login([Bind(Include = "Id,Nick,Password")] Usuario usuario)
+        public ActionResult Login([Bind(Include = "Id,Nick,Password")] Usuario usuario, string origen)
         {
             ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
 
@@ -47,9 +47,13 @@ namespace PresentacionAspNetMvc.Controllers
 
                     ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuarioCompleto;
                     //Session["cantidadCarrito"] = 0;
-                    ViewBag.ErrorNick("Bienvenid@", @usuario.Nick);
-                    return View(usuario);
-                    //return Redirect("/");
+                    //ViewBag.ErrorNick("Bienvenid@", @usuario.Nick);
+                    //return View(usuario);
+                   // return Redirect("/");
+                  
+                    return RedirectToAction(origen);
+                  
+
                 }
                 
                 //return RedirectToAction("Index");
@@ -92,10 +96,11 @@ namespace PresentacionAspNetMvc.Controllers
                         HttpContext.Session["mostrarModal"] = true;
                         ViewBag.Error = "Usuario Creado Correctamente";
                         //return Redirect("/");
+                        HttpContext.Session["carrito"] = new Carrito(null);
+                        Session["cantidadCarrito"] = 0;
+
                         return View(usuario);
-
                     }
-
                 }
                 return View(usuario);
             }

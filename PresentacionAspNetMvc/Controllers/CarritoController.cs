@@ -24,11 +24,11 @@ namespace PresentacionAspNetMvc.Controllers
             ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
 
             ICarrito carrito = (ICarrito)HttpContext.Session["carrito"];
-            
+
             IProducto producto = ln.BuscarProductoPorId(id);
 
             ln.AgregarProductoACarrito(producto, cantidad, carrito);
-            
+
             HttpContext.Session["cantidadCarrito"] = (int)HttpContext.Session["cantidadCarrito"] + cantidad;
             //return View("Index", carrito);
             //return RedirectToAction ("~/Carrito");
@@ -52,10 +52,11 @@ namespace PresentacionAspNetMvc.Controllers
             int idFactura = ln.GetIdFactura(numeroFactura);
 
             ln.AltaLineas(factura, idFactura);
-            
+
             HttpContext.Session["factura"] = factura;
 
             return View("Factura", factura);
+
 
         }
     }

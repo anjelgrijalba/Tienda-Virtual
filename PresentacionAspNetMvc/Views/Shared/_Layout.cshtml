@@ -85,7 +85,8 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     @*  <a href="#" data-toggle="modal" data-target="#login">Iniciar sesión</a>*@
-                                    @Html.ActionLink("Iniciar sesión", "Login", "Usuarios")
+                                 @*   @Html.ActionLink("Iniciar sesión", "Login", "Usuarios", null, new { origen = "'Index','Productos'" })*@
+                                    @Html.ActionLink("Iniciar sesión", "Login", "Usuarios", new {origen = "'Index', 'Productos'"})
                                 </li>
                                 <li>
                                     @Html.ActionLink("Registrarse", "Register", "Usuarios")
