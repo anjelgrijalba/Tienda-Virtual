@@ -198,8 +198,8 @@
     <Content Include="Areas\Backend\Views\ProductosBack\Inicio.cshtml" />
     <Content Include="Areas\Backend\Views\FacturasBack\Index.cshtml" />
     <Content Include="Areas\Backend\Views\Shared\DisplayTemplates\ShortDateTime.cshtml" />
-    <Content Include="Areas\Backend\Views\FacturasBack\Details.cshtml" />
     <Content Include="Areas\Backend\Views\FacturasBack\Delete.cshtml" />
+    <Content Include="Areas\Backend\Views\FacturasBack\Imprimir.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

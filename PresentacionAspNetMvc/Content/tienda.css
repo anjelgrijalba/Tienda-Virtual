@@ -107,9 +107,9 @@ div.menuLat {
     padding-top:6em;
     padding-bottom:6em;
 }
-.factTable td, .factTable th {
+/*.factTable td, .factTable th {
     text-align: center;
-}
+}*/
 .fotito{
     display:table;
     margin: 0 auto;

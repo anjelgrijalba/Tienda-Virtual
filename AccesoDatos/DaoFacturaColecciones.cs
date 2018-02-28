@@ -47,12 +47,12 @@ namespace TiendaVirtual.AccesoDatos
             throw new NotImplementedException();
         }
 
-        public void Alta(DateTime fecha, int idU, string numero)
+        public IFactura BuscarPorNumero(string numero)
         {
             throw new NotImplementedException();
         }
 
-        public IFactura BuscarPorNumero(string numero)
+        public void Baja(int id)
         {
             throw new NotImplementedException();
         }

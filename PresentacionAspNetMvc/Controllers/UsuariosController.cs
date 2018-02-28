@@ -23,10 +23,9 @@ namespace PresentacionAspNetMvc.Controllers
         // POST: GET:Usuarios/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login([Bind(Include = "Id,Nick,Password")] Usuario usuario, string origen)
+        public ActionResult Login([Bind(Include = "Id,Nick,Password")] Usuario usuario)
         {
             ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
-
             try
             {
                 if (!ln.ExisteNick(usuario.Nick))
@@ -41,22 +40,20 @@ namespace PresentacionAspNetMvc.Controllers
                 }
                 else
                 {
+                    //string cadena = HttpContext.Session["origenYdestino"].ToString();
+
                     IUsuario usuarioCompleto = ln.ValidarUsuarioYDevolverUsuario(usuario.Nick, usuario.Password);
 
                     HttpContext.Session["usuario"] = usuarioCompleto;
 
                     ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuarioCompleto;
-                    //Session["cantidadCarrito"] = 0;
-                    //ViewBag.ErrorNick("Bienvenid@", @usuario.Nick);
-                    //return View(usuario);
-                   // return Redirect("/");
-                  
-                    return RedirectToAction(origen);
-                  
+                   
+                    ViewBag.ErrorNick("Bienvenid@", usuarioCompleto.Nick);
 
+                   
+
+                    return RedirectToAction("Index","Productos");
                 }
-                
-                //return RedirectToAction("Index");
             }
             catch
             {

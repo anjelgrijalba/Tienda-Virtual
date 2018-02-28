@@ -94,7 +94,7 @@ namespace PresentacionAspNetMvc.Areas.Backend.Controllers
             IFactura factura = ln.BuscarFacturaPorNumero(id.ToString());
             try
             {
-                //ln.BajaUsuario(factura);
+                ln.BajaFactura(id);
                 return RedirectToAction("Index");
             }
             catch

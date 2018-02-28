@@ -3,6 +3,7 @@
     IUsuario usuario = (IUsuario)Session["usuario"];
 
     var cantidadCarrito = Session["cantidadCarrito"];
+    //Session["origenYdestino"] = "'Index','Productos'";
 }
 
 
@@ -59,10 +60,10 @@
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
+                        <li>@*// lo hago así por estética, para que me deje meter el icono*@
                             @using (Html.BeginForm("GenerarFactura", "Carrito", FormMethod.Post, new { id = "frmCarrito", @class = "form-inline" }))
                             {
-                                <button class="btn btn-success navbar-btn" type="submit">Finalizar  <span class="glyphicon glyphicon-list-alt"></span></button>
+                                <button class="btn btn-success navbar-btn" type="submit"><span class="glyphicon glyphicon-list-alt"></span>  Finalizar  </button>
                             }
                         </li>
                         <li>&nbsp;&nbsp;</li>
@@ -84,9 +85,9 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
+
                                     @*  <a href="#" data-toggle="modal" data-target="#login">Iniciar sesión</a>*@
-                                 @*   @Html.ActionLink("Iniciar sesión", "Login", "Usuarios", null, new { origen = "'Index','Productos'" })*@
-                                    @Html.ActionLink("Iniciar sesión", "Login", "Usuarios", new {origen = "'Index', 'Productos'"})
+                                    @Html.ActionLink("Iniciar sesión", "Login", "Usuarios")
                                 </li>
                                 <li>
                                     @Html.ActionLink("Registrarse", "Register", "Usuarios")
@@ -97,6 +98,7 @@
                                 <li>
                                     @Html.ActionLink("Desconexión", "Logout", "Usuarios")
                                 </li>
+
                                 <li>
                                     @Html.ActionLink("ADMINISTRACIÓN", "Inicio", "ProductosBack", new { area = "Backend" }, null)
                                 </li>

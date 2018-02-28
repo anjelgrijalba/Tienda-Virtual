@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Producto";
+    
 }
 
 <section id="ficha" class="row">
@@ -12,7 +13,7 @@
     <div class="col-xs-12 col-sm-8">
         <h2>@Html.DisplayFor(model => model.Nombre)</h2>
         <h3>@Html.DisplayFor(model => model.Precio) €</h3>
-        @using (Html.BeginForm("AgregarProducto", "Carrito", FormMethod.Post, new { id = "frmCarrito", @class = "form-inline" }))
+        @using (Html.BeginForm("AgregarProducto", "Carrito", FormMethod.Post, new {@class = "form-inline" }))
         {   @*<form id="frmCarrito" action="/Carrito/AgregarProducto" class="form-inline" method="post">*@
             <div class="form-group">
                 <input class="form-control" type="number" name="cantidad" id="cantidad" value="1" />

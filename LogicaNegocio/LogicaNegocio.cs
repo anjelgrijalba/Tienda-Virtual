@@ -102,11 +102,6 @@ namespace TiendaVirtual.LogicaNegocio
             return f;
         }
 
-        public void AltaFactura(DateTime fecha, int idU, string numero)
-        {
-            daoFactura.Alta(fecha, idU, numero);
-        }
-
         public void AltaFactura(IFactura factura)
         {
             daoFactura.Alta(factura);
@@ -189,6 +184,11 @@ namespace TiendaVirtual.LogicaNegocio
         public IFactura BuscarFacturaPorNumero(string numero)
         {
             return daoFactura.BuscarPorNumero(numero);
+        }
+
+        public void BajaFactura(int id)
+        {
+            daoFactura.Baja(id);
         }
     }
 }

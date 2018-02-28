@@ -19,13 +19,13 @@ namespace TiendaVirtual.AccesoDatos
         private const string SELECT_FACTURAS = "select distinct facturaid from lineasfactura";
         private const string SQL_INSERT_LINEAS = "INSERT INTO lineasfactura (FacturaId, ProductoId, Cantidad ) VALUES (@NumeroFactura, @ProductoId, @Cantidad)";
         private const string SQL_SELECT_IDFACTURA = "SELECT Id FROM facturas WHERE Numero=@NumeroFactura";
-        private const string SQL_SELECT_ID = "SELECT Id, Nick, Contra FROM usuarios WHERE Id=@Id";
         private const string SQL_SELECT_FACTURA = "SELECT f.Fecha, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick " +
                                                     "FROM facturas f " +
                                                     "INNER JOIN lineasfactura l ON f.Id = l.FacturaId " +
                                                     "INNER JOIN productos p ON p.Id = l.ProductoId " +
                                                     "INNER JOIN usuarios u ON u.Id= f.UsuariosId " +
                                                     "WHERE f.Numero = @NumeroFactura";
+        private const string SQL_DELETE_ID = "DELETE FROM facturas WHERE Numero=@NumeroFactura";
 
         //private const string SELECT_LIN = "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick, f.Id FROM facturas f, lineasfactura l, productos p, usuarios u WHERE f.Id = l.FacturaId AND p.Id = l.ProductoId AND u.Id= f.UsuariosId";
         //private const string SELECT_LIN = "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick FROM facturas f INNER JOIN lineasfactura l ON f.Id = l.FacturaId INNER JOIN productos p ON p.Id = l.ProductoId INNER JOIN usuarios u ON u.Id= f.UsuariosId";
@@ -63,9 +63,7 @@ namespace TiendaVirtual.AccesoDatos
             }
         }
 
-        public void Alta(IFactura factura) { }
-
-        public void Alta(DateTime fecha, int idU, string numero)
+        public void Alta(IFactura factura)
         {
             try
             {
@@ -94,9 +92,9 @@ namespace TiendaVirtual.AccesoDatos
                     comInsert.Parameters.Add(parUid);
 
                     //"Zona concreta"
-                    parUid.Value = idU;
-                    parNumero.Value = numero;
-                    parFecha.Value = fecha;
+                    parUid.Value = factura.Usuario.Id;
+                    parNumero.Value = factura.Numero;
+                    parFecha.Value = factura.Fecha;
 
 
                     int numRegistrosInsertados = comInsert.ExecuteNonQuery();
@@ -273,7 +271,6 @@ namespace TiendaVirtual.AccesoDatos
                                 throw new AccesoDatosException("Número de registros insertados: " +
                                     numRegistrosInsertados);
                         }
-
                         transaccion.Commit();
                     }
                     catch (SqlException)
@@ -314,7 +311,6 @@ namespace TiendaVirtual.AccesoDatos
                     IProducto producto = new Producto();
                     List<ILineaFactura> lineas = new List<ILineaFactura>();
 
-
                     while (dr.Read())
                     {
                         factura.Numero = numero;
@@ -333,6 +329,41 @@ namespace TiendaVirtual.AccesoDatos
                 throw new AccesoDatosException("No se han podido encontrar la factura", e);
             }
 
+        }
+
+        public void Baja(int id)
+        {
+            try
+            {
+                using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
+                {
+                    //"Zona declarativa"
+                    con.Open();
+
+                    IDbCommand comDelete = con.CreateCommand();
+
+                    comDelete.CommandText = SQL_DELETE_ID;
+
+                    IDbDataParameter parId = comDelete.CreateParameter();
+                    parId.ParameterName = "NumeroFactura";
+                    parId.DbType = DbType.String;
+
+                    comDelete.Parameters.Add(parId);
+
+                    //"Zona concreta"
+                    parId.Value = id.ToString();
+
+                    int numRegistrosBorrados = comDelete.ExecuteNonQuery();
+
+                    if (numRegistrosBorrados != 1)
+                        throw new AccesoDatosException("Número de registros borrados: " +
+                            numRegistrosBorrados);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AccesoDatosException("No se ha podido realizar el borrado", e);
+            }
         }
     }
 }

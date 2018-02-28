@@ -37,25 +37,32 @@ namespace PresentacionAspNetMvc.Controllers
 
         public ActionResult GenerarFactura()
         {
-            ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
-
-            ICarrito carrito = (ICarrito)HttpContext.Session["carrito"];
-
-            string numeroFactura = ln.GenerarNumero();
-
-            IFactura factura = ln.FacturarCarrito(carrito, numeroFactura);
-
             IUsuario usuario = (IUsuario)HttpContext.Session["usuario"];
+           
+            if ( usuario == null )
+                return RedirectToAction("Login", "Usuarios");
+            else
+            {
+                ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
 
-            ln.AltaFactura(factura.Fecha, usuario.Id, numeroFactura);
+                ICarrito carrito = (ICarrito)HttpContext.Session["carrito"];
 
-            int idFactura = ln.GetIdFactura(numeroFactura);
+                string numeroFactura = ln.GenerarNumero();
 
-            ln.AltaLineas(factura, idFactura);
+                IFactura factura = ln.FacturarCarrito(carrito, numeroFactura);
 
-            HttpContext.Session["factura"] = factura;
+                ln.AltaFactura(factura);
 
-            return View("Factura", factura);
+                int idFactura = ln.GetIdFactura(numeroFactura);
+
+                ln.AltaLineas(factura, idFactura);
+
+                HttpContext.Session["factura"] = factura;
+
+                return View("Factura", factura);
+            }
+
+           
 
 
         }
