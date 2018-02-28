@@ -186,9 +186,9 @@ namespace TiendaVirtual.LogicaNegocio
             return daoFactura.BuscarPorNumero(numero);
         }
 
-        public void BajaFactura(int id)
+        public void BajaFactura(string numero)
         {
-            daoFactura.Baja(id);
+            daoFactura.Baja(numero);
         }
     }
 }

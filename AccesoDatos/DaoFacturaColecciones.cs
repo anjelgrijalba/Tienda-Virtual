@@ -52,9 +52,10 @@ namespace TiendaVirtual.AccesoDatos
             throw new NotImplementedException();
         }
 
-        public void Baja(int id)
+        public void Baja(string numero)
         {
             throw new NotImplementedException();
         }
+     
     }
 }

@@ -21,7 +21,7 @@ namespace PresentacionAspNetMvc.Areas.Backend.Controllers
         }
 
         // GET: Backend/FacturasBack/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Imprimir(int id)
         {
             ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
 
@@ -94,7 +94,7 @@ namespace PresentacionAspNetMvc.Areas.Backend.Controllers
             IFactura factura = ln.BuscarFacturaPorNumero(id.ToString());
             try
             {
-                ln.BajaFactura(id);
+                ln.BajaFactura(id.ToString());
                 return RedirectToAction("Index");
             }
             catch

@@ -15,7 +15,7 @@ namespace TiendaVirtual.AccesoDatos
         int GetIdFactura(string numero);
         string GenerarNumero();
         IFactura BuscarPorNumero(string numero);
-        void Baja(int id);
+        void Baja(string numero);
 
     }
 }

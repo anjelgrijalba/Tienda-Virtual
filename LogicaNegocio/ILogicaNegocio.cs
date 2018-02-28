@@ -40,6 +40,6 @@ namespace TiendaVirtual.LogicaNegocio
         string GenerarNumero();
         int GetIdFactura(string numero);
         IFactura BuscarFacturaPorNumero(string numero);
-        void BajaFactura(int id);
+        void BajaFactura(string numero);
     }
 }

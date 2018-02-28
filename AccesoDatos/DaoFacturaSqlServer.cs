@@ -331,10 +331,10 @@ namespace TiendaVirtual.AccesoDatos
 
         }
 
-        public void Baja(int id)
+        public void Baja(string numero)
         {
-            try
-            {
+            //try
+            //{
                 using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
                 {
                     //"Zona declarativa"
@@ -351,7 +351,7 @@ namespace TiendaVirtual.AccesoDatos
                     comDelete.Parameters.Add(parId);
 
                     //"Zona concreta"
-                    parId.Value = id.ToString();
+                    parId.Value = numero;
 
                     int numRegistrosBorrados = comDelete.ExecuteNonQuery();
 
@@ -359,11 +359,11 @@ namespace TiendaVirtual.AccesoDatos
                         throw new AccesoDatosException("Número de registros borrados: " +
                             numRegistrosBorrados);
                 }
-            }
-            catch (Exception e)
-            {
-                throw new AccesoDatosException("No se ha podido realizar el borrado", e);
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    throw new AccesoDatosException("No se ha podido realizar el borrado", e);
+            //}
         }
     }
 }
