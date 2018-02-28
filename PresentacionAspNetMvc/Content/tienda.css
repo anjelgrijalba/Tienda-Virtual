@@ -107,6 +107,10 @@ div.menuLat {
     padding-top:6em;
     padding-bottom:6em;
 }
-/*#finTabla{
-    border-bottom-width:thick!important;
-}*/
+#facturaB.table td, #facturaB.table th {
+    text-align: center;
+}
+.fotito{
+    display:table;
+    margin: 0 auto;
+}

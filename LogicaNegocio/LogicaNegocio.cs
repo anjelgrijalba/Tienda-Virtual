@@ -72,8 +72,6 @@ namespace TiendaVirtual.LogicaNegocio
             return daoProducto.BuscarPorId(id);
         }
 
-      
-
         public IEnumerable<IUsuario> BuscarTodosUsuarios()
         {
             Debug.Print("Consulta de todos los usuarios");
@@ -101,12 +99,6 @@ namespace TiendaVirtual.LogicaNegocio
 
             f.Numero = numero;
 
-            //daoFactura.Alta(f);
-            
-            //int idFactura = daoFactura.GetIdFactura(f);
-
-            //daoFactura.AltaLineas(f);
-
             return f;
         }
 
@@ -114,6 +106,7 @@ namespace TiendaVirtual.LogicaNegocio
         {
             daoFactura.Alta(fecha, idU, numero);
         }
+
         public void AltaFactura(IFactura factura)
         {
             daoFactura.Alta(factura);
@@ -159,12 +152,14 @@ namespace TiendaVirtual.LogicaNegocio
 
             return usuarioValido != null ? true : false;
         }
+
         public bool ExisteNick(string nick)
         {
             IUsuario nickValido = BuscarUsuarioPorNick(nick);
 
             return nickValido != null ? true : false;
         }
+
         public bool PasswordCorrecto(string nick, string password)
         {
             IUsuario usuario = daoUsuario.BuscarPorNick(nick);
@@ -186,6 +181,7 @@ namespace TiendaVirtual.LogicaNegocio
         {
             return daoFactura.GetIdFactura(numero);
         }
+
         public void AltaLineas(IFactura factura, int id)
         {
             daoFactura.AltaLineas(factura, id);

@@ -56,10 +56,7 @@ namespace TiendaVirtual.AccesoDatos
             }
         }
 
-        public void Alta(IFactura factura)
-        {
-
-        }
+        public void Alta(IFactura factura) { }
 
         public void Alta(DateTime fecha, int idU, string numero)
         {
@@ -134,7 +131,6 @@ namespace TiendaVirtual.AccesoDatos
 
                     List<Object[]> listado = new List<Object[]>();
 
-
                     while (dr.Read())    //lee cada una de las lineas de todas las facturas seguidas
                     {
                         Object[] linea = new Object[]
@@ -150,8 +146,8 @@ namespace TiendaVirtual.AccesoDatos
                         };
                         listado.Add(linea);
                     }
-                    int num = listado.Count();
-                    for (int o = 0; o < num; o++)
+                    int totalFacts = listado.Count();
+                    for (int o = 0; o < totalFacts; o++)
                     {
                         if (listado[o] != null) //comprobacion exception
                         {
@@ -161,13 +157,12 @@ namespace TiendaVirtual.AccesoDatos
                             factura.Numero = listado[o][0].ToString();
                             factura.Fecha = (DateTime)listado[o][1];
                             factura.Usuario.Nick = listado[o][7].ToString();
-                            //factura.Usuario.Id = dr.GetInt32(9);
 
                             IProducto P = new Producto((int)listado[o][4], listado[o][5].ToString(), (decimal)listado[o][6]);
                             ILineaFactura L = new LineaFactura(P, (int)listado[o][3]);
 
                             lineas.Add(L);
-                            if (o != num - 1)
+                            if (o != totalFacts - 1)
                             {
                                 //compruebo si hemos cambiado de factura
                                 if (listado[o][0].ToString() != listado[o + 1][0].ToString())
@@ -175,11 +170,9 @@ namespace TiendaVirtual.AccesoDatos
                                     factura.ImportarLineas(lineas);
                                     facturas.Add(factura);
                                     lineas.Clear();
-
                                 }
-
                             }
-                            else
+                            else  //si es la última factura
                             {
                                 factura.ImportarLineas(lineas);
                                 facturas.Add(factura);
@@ -197,16 +190,12 @@ namespace TiendaVirtual.AccesoDatos
 
         }
 
-
-
         public int GetIdFactura(string numero)
         {
             try
             {
                 using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
                 {
-
-
                     //"Zona declarativa"
                     con.Open();
 
@@ -223,9 +212,7 @@ namespace TiendaVirtual.AccesoDatos
                     //"Zona concreta"
 
                     parNumeroFactura.Value = numero;
-
                     int id = (int)comSelectId.ExecuteScalar();
-
                     return id;
                 }
             }
@@ -233,28 +220,24 @@ namespace TiendaVirtual.AccesoDatos
             {
                 throw new AccesoDatosException("No se ha podido encontrar el id de esa factura ", e);
             }
-
         }
 
         public void AltaLineas(IFactura factura, int id)
         {
             try
             {
-
                 using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
                 {
-                    //IDbTransaction transaccion;
+                    IDbTransaction transaccion;
                     //"Zona declarativa"
                     con.Open();
-                    //transaccion = con.BeginTransaction();
-                    //try
-                    //{
+                    transaccion = con.BeginTransaction();
+                    try
+                    {
+                        IDbCommand comSecomInsertLineas = con.CreateCommand();
+                        comSecomInsertLineas.Transaction = transaccion;
+                        comSecomInsertLineas.CommandText = SQL_INSERT_LINEAS;
 
-                    IDbCommand comSecomInsertLineas = con.CreateCommand();
-                    //comSecomInsertLineas.Transaction = transaccion;
-                    comSecomInsertLineas.CommandText = SQL_INSERT_LINEAS;
-
-                   
                         IDbDataParameter parIdFactura = comSecomInsertLineas.CreateParameter();
                         parIdFactura.ParameterName = "NumeroFactura";
                         parIdFactura.DbType = DbType.String;
@@ -271,31 +254,25 @@ namespace TiendaVirtual.AccesoDatos
                         comSecomInsertLineas.Parameters.Add(parCantidad);
                         comSecomInsertLineas.Parameters.Add(parIdFactura);
 
-                    foreach (ILineaFactura l in factura.LineasFactura)
-                    {
-                        //"Zona concreta"
-                        parIdFactura.Value = id;
-                        parProducto.Value = l.Producto.Id;
-                        parCantidad.Value = l.Cantidad;
+                        foreach (ILineaFactura l in factura.LineasFactura)
+                        {
+                            //"Zona concreta"
+                            parIdFactura.Value = id;
+                            parProducto.Value = l.Producto.Id;
+                            parCantidad.Value = l.Cantidad;
 
-                        int numRegistrosInsertados = comSecomInsertLineas.ExecuteNonQuery();
-                        if (numRegistrosInsertados != 1)
-                            throw new AccesoDatosException("Número de registros insertados: " +
-                                numRegistrosInsertados);
+                            int numRegistrosInsertados = comSecomInsertLineas.ExecuteNonQuery();
+                            if (numRegistrosInsertados != 1)
+                                throw new AccesoDatosException("Número de registros insertados: " +
+                                    numRegistrosInsertados);
+                        }
+
+                        transaccion.Commit();
                     }
-
-
-
-                    //transaccion.Commit();
-                    //}
-                    //catch (SqlException)
-                    //{
-                    //    transaccion.Rollback();
-                    //}
-
-
-
-
+                    catch (SqlException)
+                    {
+                        transaccion.Rollback();
+                    }
                 }
             }
             catch (Exception e)
