@@ -107,7 +107,7 @@ div.menuLat {
     padding-top:6em;
     padding-bottom:6em;
 }
-#facturaB.table td, #facturaB.table th {
+.factTable td, .factTable th {
     text-align: center;
 }
 .fotito{

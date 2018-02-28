@@ -15,6 +15,7 @@ namespace TiendaVirtual.AccesoDatos
          IEnumerable<IFactura> ListarTodas();
         int GetIdFactura(string numero);
         string GenerarNumero();
+        IFactura BuscarPorNumero(string numero);
 
     }
 }

@@ -1,0 +1,29 @@
+﻿@model TiendaVirtual.Entidades.Factura
+@{
+    ViewBag.Title = "Borrar";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout - Backend.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h2><span class="glyphicon glyphicon-erase"></span>&nbsp;Borrar</h2>
+
+<h3>¿Confirmar borrado de la Factura @Html.DisplayNameFor(model => model.Numero) ?</h3>
+<div>
+   
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver a la lista", "Index")
+        </div>
+    }
+</div>
+@section  BackToIndex
+{
+    @Html.ActionLink("CopyPasteShop BACKEND", "Index", "Facturas", null, new { @class = "navbar-brand" })
+}
+
+

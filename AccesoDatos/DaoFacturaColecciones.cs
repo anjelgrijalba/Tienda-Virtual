@@ -51,5 +51,10 @@ namespace TiendaVirtual.AccesoDatos
         {
             throw new NotImplementedException();
         }
+
+        public IFactura BuscarPorNumero(string numero)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

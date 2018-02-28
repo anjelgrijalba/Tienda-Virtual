@@ -65,13 +65,9 @@ namespace PresentacionAspNetMvc.Areas.Backend.Controllers
                         ViewBag.Error = "Usuario Creado Correctamente";
                         
                         return RedirectToAction("Index");
-
                     }
-                   
                 }
-
                 return View(usuario);
-
             }
             catch
             {

@@ -20,6 +20,13 @@ namespace TiendaVirtual.AccesoDatos
         private const string SQL_INSERT_LINEAS = "INSERT INTO lineasfactura (FacturaId, ProductoId, Cantidad ) VALUES (@NumeroFactura, @ProductoId, @Cantidad)";
         private const string SQL_SELECT_IDFACTURA = "SELECT Id FROM facturas WHERE Numero=@NumeroFactura";
         private const string SQL_SELECT_ID = "SELECT Id, Nick, Contra FROM usuarios WHERE Id=@Id";
+        private const string SQL_SELECT_FACTURA = "SELECT f.Fecha, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick " +
+                                                    "FROM facturas f " +
+                                                    "INNER JOIN lineasfactura l ON f.Id = l.FacturaId " +
+                                                    "INNER JOIN productos p ON p.Id = l.ProductoId " +
+                                                    "INNER JOIN usuarios u ON u.Id= f.UsuariosId " +
+                                                    "WHERE f.Numero = @NumeroFactura";
+
         //private const string SELECT_LIN = "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick, f.Id FROM facturas f, lineasfactura l, productos p, usuarios u WHERE f.Id = l.FacturaId AND p.Id = l.ProductoId AND u.Id= f.UsuariosId";
         //private const string SELECT_LIN = "SELECT f.Numero, f.Fecha, f.UsuariosId, l.Cantidad, p.Id, p.Nombre, p.Precio, u.Nick FROM facturas f INNER JOIN lineasfactura l ON f.Id = l.FacturaId INNER JOIN productos p ON p.Id = l.ProductoId INNER JOIN usuarios u ON u.Id= f.UsuariosId";
 
@@ -279,6 +286,53 @@ namespace TiendaVirtual.AccesoDatos
             {
                 throw new AccesoDatosException("No se ha podido realizar el alta", e);
             }
+        }
+
+        public IFactura BuscarPorNumero(string numero)
+        {
+            try
+            {
+                using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
+                {
+                    //"Zona declarativa"
+                    con.Open();
+
+                    IDbCommand comSelect = con.CreateCommand();
+
+                    comSelect.CommandText = SQL_SELECT_FACTURA;
+
+                    IDbDataParameter parIdFactura = comSelect.CreateParameter();
+                    parIdFactura.ParameterName = "NumeroFactura";
+                    parIdFactura.DbType = DbType.String;
+                    comSelect.Parameters.Add(parIdFactura);
+                    parIdFactura.Value = numero;
+
+                    IDataReader dr = comSelect.ExecuteReader();
+
+                    IUsuario usuario = new Usuario();
+                    IFactura factura = new Factura(usuario);
+                    IProducto producto = new Producto();
+                    List<ILineaFactura> lineas = new List<ILineaFactura>();
+
+
+                    while (dr.Read())
+                    {
+                        factura.Numero = numero;
+                        factura.Fecha = dr.GetDateTime(0);
+                        factura.Usuario.Nick = dr.GetString(5);
+                        IProducto P = new Producto(dr.GetInt32(2), dr.GetString(3), dr.GetDecimal(4));
+                        ILineaFactura L = new LineaFactura(P, dr.GetInt32(1));
+                        lineas.Add(L);
+                    }
+                    factura.ImportarLineas(lineas);
+                    return factura;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AccesoDatosException("No se han podido encontrar la factura", e);
+            }
+
         }
     }
 }

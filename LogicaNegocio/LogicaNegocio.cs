@@ -186,5 +186,9 @@ namespace TiendaVirtual.LogicaNegocio
         {
             daoFactura.AltaLineas(factura, id);
         }
+        public IFactura BuscarFacturaPorNumero(string numero)
+        {
+            return daoFactura.BuscarPorNumero(numero);
+        }
     }
 }
