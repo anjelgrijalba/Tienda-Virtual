@@ -114,3 +114,9 @@ div.menuLat {
     display:table;
     margin: 0 auto;
 }
+div.separador{
+    padding-top:4em;
+}
+button.navbar-btn{
+    background-color:black;
+}

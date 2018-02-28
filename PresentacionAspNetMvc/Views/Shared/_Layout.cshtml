@@ -1,7 +1,7 @@
 ﻿@using TiendaVirtual.Entidades
 @{
     IUsuario usuario = (IUsuario)Session["usuario"];
-    
+
     var cantidadCarrito = Session["cantidadCarrito"];
 }
 
@@ -20,17 +20,17 @@
 
     @*@{
 
-        string elNick = "";
-        TiendaVirtual.Entidades.Usuario u = (TiendaVirtual.Entidades.Usuario)HttpContext.Current.Session["usuario"];
-        if (u != null)
-        {
-            elNick = u.Nick;
-        }
-        else
-        {
-            elNick = "";
-        }
-    }*@
+            string elNick = "";
+            TiendaVirtual.Entidades.Usuario u = (TiendaVirtual.Entidades.Usuario)HttpContext.Current.Session["usuario"];
+            if (u != null)
+            {
+                elNick = u.Nick;
+            }
+            else
+            {
+                elNick = "";
+            }
+        }*@
 </head>
 <body class="container-fluid">
     <div class="wrapper">
@@ -60,8 +60,18 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a class="navbar-brand" href="~/Carrito/Index"><span class="glyphicon glyphicon-shopping-cart"></span>@(cantidadCarrito)</a>
-
+                            @using (Html.BeginForm("GenerarFactura", "Carrito", FormMethod.Post, new { id = "frmCarrito", @class = "form-inline" }))
+                            {
+                                <button class="btn btn-success navbar-btn" type="submit">Finalizar  <span class="glyphicon glyphicon-list-alt"></span></button>
+                            }
+                        </li>
+                        <li>&nbsp;&nbsp;</li>
+                        <li>
+                            @using (Html.BeginForm("Index", "Carrito", FormMethod.Post, new { id = "frmCarrito", @class = "form-inline" }))
+                            {
+                            <button class="btn btn-primary navbar-btn" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;@(cantidadCarrito)</button>
+                            }
+                            @*<a class="navbar-brand btn btn-success navbar-btn" href="~/Carrito/Index"><span class="glyphicon glyphicon-shopping-cart"></span>@(cantidadCarrito)</a>*@
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -200,36 +210,36 @@
 
         <div class="push"></div>
     </div>
-        <footer class="row footer">
-            <div class="col-sm-4 text-center">
-                <h4>Parte 1</h4>
-                <ul class="list-unstyled">
-                    <li><a href="#">Uno</a></li>
-                    <li><a href="#">Dos</a></li>
-                    <li><a href="#">Tres</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-4 text-center">
-                <h4>Parte 2</h4>
-                <ul class="list-unstyled">
-                    <li><a href="#">Uno</a></li>
-                    <li><a href="#">Dos</a></li>
-                    <li><a href="#">Tres</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-4 text-center">
-                <h4>Parte 3</h4>
-                <ul class="list-unstyled">
-                    <li><a href="#">Uno</a></li>
-                    <li><a href="#">Dos</a></li>
-                    <li><a href="#">Tres</a></li>
-                </ul>
-            </div>
-        </footer>
+    <footer class="row footer">
+        <div class="col-sm-4 text-center">
+            <h4>Parte 1</h4>
+            <ul class="list-unstyled">
+                <li><a href="#">Uno</a></li>
+                <li><a href="#">Dos</a></li>
+                <li><a href="#">Tres</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-4 text-center">
+            <h4>Parte 2</h4>
+            <ul class="list-unstyled">
+                <li><a href="#">Uno</a></li>
+                <li><a href="#">Dos</a></li>
+                <li><a href="#">Tres</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-4 text-center">
+            <h4>Parte 3</h4>
+            <ul class="list-unstyled">
+                <li><a href="#">Uno</a></li>
+                <li><a href="#">Dos</a></li>
+                <li><a href="#">Tres</a></li>
+            </ul>
+        </div>
+    </footer>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-   
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
 </body>
 </html>

@@ -47,7 +47,7 @@ namespace PresentacionAspNetMvc.Controllers
 
             IUsuario usuario = (IUsuario)HttpContext.Session["usuario"];
 
-            ln.AltaFactura(factura.Fecha,usuario.Id,numeroFactura);
+            ln.AltaFactura(factura.Fecha, usuario.Id, numeroFactura);
 
             int idFactura = ln.GetIdFactura(numeroFactura);
 
