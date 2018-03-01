@@ -12,8 +12,6 @@ namespace PresentacionAspNetMvc.Controllers
 {
     public class UsuariosController : Controller
     {
-
-
         // GET:Usuarios/Login
         public ActionResult Login()
         {
@@ -23,7 +21,7 @@ namespace PresentacionAspNetMvc.Controllers
         // POST: GET:Usuarios/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login([Bind(Include = "Id,Nick,Password")] Usuario usuario)
+        public ActionResult Login([Bind(Include = "Id,Nick,Password")] Usuario usuario, string origenYdestino)
         {
             ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
             try
@@ -47,12 +45,9 @@ namespace PresentacionAspNetMvc.Controllers
                     HttpContext.Session["usuario"] = usuarioCompleto;
 
                     ((ICarrito)HttpContext.Session["carrito"]).Usuario = usuarioCompleto;
-                   
-                    ViewBag.ErrorNick("Bienvenid@", usuarioCompleto.Nick);
 
                    
-
-                    return RedirectToAction("Index","Productos");
+                    return RedirectToAction(Session["Vista"].ToString(), Session["Controlador"].ToString());
                 }
             }
             catch
@@ -60,7 +55,6 @@ namespace PresentacionAspNetMvc.Controllers
                 return View(usuario);
             }
         }
-
 
         // GET: Usuarios/Register
         public ActionResult Register()
@@ -121,26 +115,18 @@ namespace PresentacionAspNetMvc.Controllers
         {
             try
             {
-                
                 HttpContext.Session["usuario"] = null;
 
                 HttpContext.Session["carrito"] = new Carrito(null);
                 Session["cantidadCarrito"] = 0;
 
                 return Redirect("/");
-
             }
             catch
             {
                 return View();
             }
         }
-
-
-
-
-
-
     }
 }
 

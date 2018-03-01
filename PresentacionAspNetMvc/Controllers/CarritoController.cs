@@ -14,10 +14,9 @@ namespace PresentacionAspNetMvc.Controllers
         public ActionResult Index()
         {
             ICarrito carrito = (ICarrito)HttpContext.Session["carrito"];
-            //return View(carrito);
+
             return View(carrito);
         }
-
 
         public ActionResult AgregarProducto(int id, int cantidad)
         {
@@ -38,9 +37,13 @@ namespace PresentacionAspNetMvc.Controllers
         public ActionResult GenerarFactura()
         {
             IUsuario usuario = (IUsuario)HttpContext.Session["usuario"];
-           
-            if ( usuario == null )
+
+            if (usuario == null)
+            {
+                Session["Controlador"] = "Carrito";
+                Session["Vista"] = "GenerarFactura";
                 return RedirectToAction("Login", "Usuarios");
+            }
             else
             {
                 ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
@@ -61,10 +64,13 @@ namespace PresentacionAspNetMvc.Controllers
 
                 return View("Factura", factura);
             }
-
-           
-
-
         }
+
+        public ActionResult Vaciar()
+        {
+            Session["cantidadCarrito"] = 0;
+            Session["carrito"] = new Carrito(null);
+            return RedirectToAction("Index", "Productos");
+        }        
     }
 }

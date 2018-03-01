@@ -12,6 +12,8 @@ namespace PresentacionAspNetMvc.Controllers
         // GET: Productos
         public ActionResult Index()
         {
+            Session["Controlador"] = "Productos";
+            Session["Vista"] = "Index";
             var ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
             return View(ln.ListadoProductos());
         }
@@ -19,6 +21,8 @@ namespace PresentacionAspNetMvc.Controllers
         [HttpGet]
         public ActionResult Ficha(int id)
         {
+            Session["Controlador"] = "Productos";
+            Session["Vista"] = "Index";
             var ln = (ILogicaNegocio)HttpContext.Application["logicaNegocio"];
             return View(ln.BuscarProductoPorId(id));
         }

@@ -2,7 +2,8 @@
 
 @{
     ViewBag.Title = "Index";
-    //Session["origenYdestino"] = "'GenerarFactura','Factura'";
+    Session["Controlador"] = "Carrito";
+    Session["Vista"] = "Factura";
 }
 
 <section id="carrito" class="row">
@@ -67,7 +68,13 @@
                     </td>
                     <td>
                         <p>
-                            @Html.ActionLink("Factura", "GenerarFactura",null, new {@class = "btn btn-primary pull-right", role = "button" })
+                           
+                            @*@using (Html.BeginForm("GenerarFactura", "Carrito", FormMethod.Post, new { id = "frmCarrito", @class = "form-inline" }))
+    {
+                        <button class="btn btn-primary pull-right" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span>"Factura"</button>
+                        <input type="hidden" name="origenYdestino" value="'GenerarFactura','Carrito'" />
+}*@
+                             @Html.ActionLink("Factura", "GenerarFactura", null, new { @class = "btn btn-primary pull-right", role = "button" })
                         </p>
                     </td>
                 </tr>

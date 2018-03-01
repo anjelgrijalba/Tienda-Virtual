@@ -38,6 +38,8 @@ namespace PresentacionAspNetMvc
             Session["carrito"] = new Carrito(null);
             Session["mostrarModal"] = false;
             Session["cantidadCarrito"] = 0;
+            Session["Controlador"] = "Productos";
+            Session["Vista"] = "Index";
 
         }
     }

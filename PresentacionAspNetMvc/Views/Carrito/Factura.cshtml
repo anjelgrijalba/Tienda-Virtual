@@ -86,15 +86,17 @@
                 </tr>
             </tfoot>
         </table>
-        <a href="@Url.Action("Index", "Productos")">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            Volver a la Tienda
-        </a>
 
-        <p>
-            @Html.ActionLink("Imprimir", "GenerarFactura", null, new { @class = "btn btn-primary pull-right", role = "button" })
-        </p>
+       @* <a href="@Url.Action("Index", "Productos")">*@
+        <a href="@Url.Action("Vaciar", "Carrito")">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                Volver a la Tienda
+            </a>
 
-    </div>
+            <p>
+                @Html.ActionLink("Imprimir", "GenerarFactura", null, new { @class = "btn btn-primary pull-right", role = "button" })
+            </p>
+
+</div>
 
 </section>

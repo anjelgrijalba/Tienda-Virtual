@@ -3,10 +3,7 @@
     IUsuario usuario = (IUsuario)Session["usuario"];
 
     var cantidadCarrito = Session["cantidadCarrito"];
-    //Session["origenYdestino"] = "'Index','Productos'";
 }
-
-
 
 <!DOCTYPE html>
 <html>
@@ -18,7 +15,6 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" href="~/Content/tienda.css" />
-
     @*@{
 
             string elNick = "";
@@ -60,7 +56,8 @@
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>@*// lo hago así por estética, para que me deje meter el icono*@
+                        <li>
+                            @*// lo hago así por estética, para que me deje meter el icono*@
                             @using (Html.BeginForm("GenerarFactura", "Carrito", FormMethod.Post, new { id = "frmCarrito", @class = "form-inline" }))
                             {
                                 <button class="btn btn-success navbar-btn" type="submit"><span class="glyphicon glyphicon-list-alt"></span>  Finalizar  </button>
@@ -70,7 +67,7 @@
                         <li>
                             @using (Html.BeginForm("Index", "Carrito", FormMethod.Post, new { id = "frmCarrito", @class = "form-inline" }))
                             {
-                            <button class="btn btn-primary navbar-btn" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;@(cantidadCarrito)</button>
+                                <button class="btn btn-primary navbar-btn" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;@(cantidadCarrito)</button>
                             }
                             @*<a class="navbar-brand btn btn-success navbar-btn" href="~/Carrito/Index"><span class="glyphicon glyphicon-shopping-cart"></span>@(cantidadCarrito)</a>*@
                         </li>
@@ -87,6 +84,14 @@
                                 <li>
 
                                     @*  <a href="#" data-toggle="modal" data-target="#login">Iniciar sesión</a>*@
+                                    @*@using (Html.BeginForm("Login", "Usuarios", FormMethod.Post, new { id = "frmCarrito", @class = "form-inline" }))
+                                    {*@
+                                        @*<button class="btn btn-primary navbar-btn" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span>"Iniciar sesión"</button>*@
+                                        @*<a href="Usuarios/Login/">Iniciar sesión</a>
+                                        <input type="hidden" name="origenYdestino" value="'Index','Productos'" />
+                                    }*@
+
+
                                     @Html.ActionLink("Iniciar sesión", "Login", "Usuarios")
                                 </li>
                                 <li>
